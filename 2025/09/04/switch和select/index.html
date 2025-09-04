@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>switch和select - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="switch和select在语法上看起来很相似，但它们是为解决完全不同的问题而设计的。 简单来说：  switch 是 值（Value） 的选择。 select 是 通道（Channel） 的选择。"><meta property="og:type" content="blog"><meta property="og:title" content="switch和select"><meta property="og:url" content="https://cofeesy.github.io/2025/09/04/switch%E5%92%8Cselect/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="switch和select在语法上看起来很相似，但它们是为解决完全不同的问题而设计的。 简单来说：  switch 是 值（Value） 的选择。 select 是 通道（Channel） 的选择。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-09-04T07:44:25.000Z"><meta property="article:modified_time" content="2025-09-04T07:45:07.606Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="Goland"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/09/04/switch%E5%92%8Cselect/"},"headline":"switch和select","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-09-04T07:44:25.000Z","dateModified":"2025-09-04T07:45:07.606Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"switch和select在语法上看起来很相似，但它们是为解决完全不同的问题而设计的。 简单来说：  switch 是 值（Value） 的选择。 select 是 通道（Channel） 的选择。"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/09/04/switch%E5%92%8Cselect/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-04T07:44:25.000Z" title="9/4/2025, 3:44:25 PM">2025-09-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-04T07:45:07.606Z" title="9/4/2025, 3:45:07 PM">2025-09-04</time></span><span class="level-item">9 minutes read (About 1347 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">switch和select</h1><div class="content"><p><code>switch</code>和<code>select</code>在语法上看起来很相似，但它们是为解决<strong>完全不同</strong>的问题而设计的。</p>
+<p>简单来说：</p>
+<ul>
+<li><code>switch</code> 是 <strong>值（Value）</strong> 的选择。</li>
+<li><code>select</code> 是 <strong>通道（Channel）</strong> 的选择。</li>
+</ul>
+<span id="more"></span>
+
+<p>你可以用一个比喻来理解：</p>
+<ul>
+<li><code>switch</code> 就像一个<strong>路口</strong>，你手里拿着一张地图（一个变量的值），根据地图上的指示（<code>case</code>匹配的值），选择走哪条路。这是一个<strong>确定的、基于已有信息</strong>的决定。</li>
+<li><code>select</code> 就像一个<strong>公交车站</strong>，有多路公交车（多个<code>channel</code>）。你不知道哪一辆会先到，但你会<strong>等待</strong>，并搭乘<strong>最先到达</strong>的那一辆。这是一个<strong>不确定的、基于未来事件</strong>的决定。</li>
+</ul>
+<p>下面我们来深入探讨它们的细节、特性和用法。</p>
+<hr>
+<h3 id="switch-关键字：值的选择器"><a href="#switch-关键字：值的选择器" class="headerlink" title="switch 关键字：值的选择器"></a><code>switch</code> 关键字：值的选择器</h3><p><code>switch</code> 是一个条件分支语句，它将一个表达式的值与一系列<code>case</code>子句进行匹配，并执行匹配的那个分支。它是<code>if-else if-else</code>链条的更清晰、更强大的替代品。</p>
+<h4 id="关键特性："><a href="#关键特性：" class="headerlink" title="关键特性："></a>关键特性：</h4><ol>
+<li><p><strong>隐式<code>break</code></strong>：Go的<code>switch</code>在每个<code>case</code>执行完毕后会自动跳出，不需要像C&#x2F;C++那样手动写<code>break</code>。这避免了很多常见的错误。</p>
+</li>
+<li><p><strong><code>fallthrough</code>关键字</strong>：如果你确实需要执行下一个<code>case</code>的代码块（不进行条件判断），可以显式使用<code>fallthrough</code>。这在实际中用得很少。</p>
+</li>
+<li><p><strong>一个<code>case</code>可以匹配多个值</strong>：用逗号分隔即可。</p>
+</li>
+<li><p><strong>无表达式的<code>switch</code></strong>：<code>switch</code>后面可以不带任何表达式，此时它等价于<code>switch true</code>，可以让你编写更清晰的<code>if-else if-else</code>逻辑。</p>
+</li>
+<li><p><strong>类型选择 (Type Switch)</strong>：这是<code>switch</code>一个非常强大的特性，专门用于判断一个接口变量(<code>interface&#123;&#125;</code>)中实际存储的是哪种类型。</p>
+</li>
+</ol>
+<h4 id="代码示例："><a href="#代码示例：" class="headerlink" title="代码示例："></a>代码示例：</h4><p><strong>1. 基本用法</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">day := <span class="string">&quot;Monday&quot;</span></span><br><span class="line"><span class="keyword">switch</span> day &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;Monday&quot;</span>, <span class="string">&quot;Tuesday&quot;</span>, <span class="string">&quot;Wednesday&quot;</span>, <span class="string">&quot;Thursday&quot;</span>, <span class="string">&quot;Friday&quot;</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;It&#x27;s a weekday&quot;</span>)</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;Saturday&quot;</span>, <span class="string">&quot;Sunday&quot;</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;It&#x27;s the weekend!&quot;</span>)</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;Not a valid day.&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 无表达式的<code>switch</code> (更清晰的 <code>if-else</code>)</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">score := <span class="number">85</span></span><br><span class="line"><span class="keyword">switch</span> &#123; <span class="comment">// 等价于 switch true</span></span><br><span class="line"><span class="keyword">case</span> score &gt;= <span class="number">90</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;Grade: A&quot;</span>)</span><br><span class="line"><span class="keyword">case</span> score &gt;= <span class="number">80</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;Grade: B&quot;</span>)</span><br><span class="line"><span class="keyword">case</span> score &gt;= <span class="number">70</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;Grade: C&quot;</span>)</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;Grade: D&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 类型选择 (Type Switch)</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i <span class="keyword">interface</span>&#123;&#125; = <span class="string">&quot;hello&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> v := i.(<span class="keyword">type</span>) &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="type">int</span>:</span><br><span class="line">    fmt.Printf(<span class="string">&quot;It&#x27;s an int: %d\n&quot;</span>, v)</span><br><span class="line"><span class="keyword">case</span> <span class="type">string</span>:</span><br><span class="line">    fmt.Printf(<span class="string">&quot;It&#x27;s a string: %s\n&quot;</span>, v)</span><br><span class="line"><span class="keyword">case</span> <span class="type">bool</span>:</span><br><span class="line">    fmt.Printf(<span class="string">&quot;It&#x27;s a bool: %t\n&quot;</span>, v)</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    fmt.Printf(<span class="string">&quot;Unknown type: %T\n&quot;</span>, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出: It&#x27;s a string: hello</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="select-关键字：通道的调度器"><a href="#select-关键字：通道的调度器" class="headerlink" title="select 关键字：通道的调度器"></a><code>select</code> 关键字：通道的调度器</h3><p><code>select</code> 专门用于处理<strong>并发和通道操作</strong>。它会等待多个通道操作中的一个准备就绪，然后执行其对应的<code>case</code>代码块。</p>
+<h4 id="关键特性：-1"><a href="#关键特性：-1" class="headerlink" title="关键特性："></a>关键特性：</h4><ol>
+<li><p><strong>阻塞性</strong>：如果<code>select</code>中所有的<code>case</code>后面的通道操作都不能立即执行（比如接收空通道，或发送给满通道），<code>select</code>将会<strong>阻塞</strong>，直到其中一个可以执行。</p>
+</li>
+<li><p><strong>随机选择</strong>：如果<strong>多个</strong>通道操作同时准备就绪，<code>select</code>会<strong>伪随机地选择一个</strong>来执行。这保证了公平性，防止某个通道被“饿死”。</p>
+</li>
+<li><p><strong><code>default</code>子句</strong>：如果<code>select</code>中包含一个<code>default</code>子句，那么<code>select</code>将<strong>永远不会阻塞</strong>。它会立即检查所有通道，如果有准备就绪的就执行，如果没有，就立即执行<code>default</code>子句。这常用于实现<strong>非阻塞的通道操作</strong>。</p>
+</li>
+<li><p><strong>超时控制</strong>：<code>select</code>与<code>time.After</code>结合是实现操作超时的经典模式。</p>
+</li>
+</ol>
+<h4 id="代码示例：-1"><a href="#代码示例：-1" class="headerlink" title="代码示例："></a>代码示例：</h4><p><strong>1. 基本用法</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">string</span>)</span><br><span class="line">ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    ch1 &lt;- <span class="string">&quot;one&quot;</span></span><br><span class="line">&#125;()</span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">    ch2 &lt;- <span class="string">&quot;two&quot;</span></span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// select会等待ch1和ch2</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">2</span>; i++ &#123;</span><br><span class="line">    <span class="keyword">select</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> msg1 := &lt;-ch1:</span><br><span class="line">        fmt.Println(<span class="string">&quot;received&quot;</span>, msg1)</span><br><span class="line">    <span class="keyword">case</span> msg2 := &lt;-ch2:</span><br><span class="line">        fmt.Println(<span class="string">&quot;received&quot;</span>, msg2)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出顺序:</span></span><br><span class="line"><span class="comment">// received two  (ch2先就绪)</span></span><br><span class="line"><span class="comment">// received one  (ch1后就绪)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. <code>default</code>实现非阻塞接收</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">messages := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">string</span>)</span><br><span class="line"><span class="comment">// ... 可能有也可能没有goroutine向messages发送数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> &#123;</span><br><span class="line"><span class="keyword">case</span> msg := &lt;-messages:</span><br><span class="line">    fmt.Println(<span class="string">&quot;received message&quot;</span>, msg)</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    fmt.Println(<span class="string">&quot;no message received, continue.&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 超时模式</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">c1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">string</span>, <span class="number">1</span>)</span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    time.Sleep(<span class="number">2</span> * time.Second)</span><br><span class="line">    c1 &lt;- <span class="string">&quot;result 1&quot;</span></span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> &#123;</span><br><span class="line"><span class="keyword">case</span> res := &lt;-c1:</span><br><span class="line">    fmt.Println(res)</span><br><span class="line"><span class="keyword">case</span> &lt;-time.After(<span class="number">1</span> * time.Second): <span class="comment">// time.After返回一个channel</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;timeout 1&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出: timeout 1 (因为1秒的超时先于2秒的操作完成)</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="核心区别总结"><a href="#核心区别总结" class="headerlink" title="核心区别总结"></a>核心区别总结</h3><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left"><code>switch</code></th>
+<th align="left"><code>select</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>核心目的</strong></td>
+<td align="left">对 <strong>值</strong> 进行分支选择</td>
+<td align="left">对 <strong>通道操作</strong> 进行并发调度</td>
+</tr>
+<tr>
+<td align="left"><strong>操作对象</strong></td>
+<td align="left">变量、常量、表达式的值、类型</td>
+<td align="left"><code>chan</code> 的发送 <code>ch &lt;- v</code> 或接收 <code>&lt;- ch</code></td>
+</tr>
+<tr>
+<td align="left"><strong>求值方式</strong></td>
+<td align="left">从上到下，顺序匹配<code>case</code></td>
+<td align="left"><strong>同时</strong>评估所有<code>case</code>，等待一个就绪</td>
+</tr>
+<tr>
+<td align="left"><strong>执行逻辑</strong></td>
+<td align="left">匹配<strong>第一个</strong>符合条件的<code>case</code></td>
+<td align="left">执行<strong>第一个准备就绪</strong>的<code>case</code>（若多个就绪则随机选一）</td>
+</tr>
+<tr>
+<td align="left"><strong><code>default</code>行为</strong></td>
+<td align="left">如果所有<code>case</code>都不匹配，则执行<code>default</code></td>
+<td align="left">如果所有<code>case</code>都未就绪，则执行<code>default</code>（实现非阻塞）</td>
+</tr>
+<tr>
+<td align="left"><strong>是否阻塞</strong></td>
+<td align="left">永不阻塞</td>
+<td align="left"><strong>会阻塞</strong>，直到有<code>case</code>就绪（除非有<code>default</code>）</td>
+</tr>
+<tr>
+<td align="left"><strong>主要应用场景</strong></td>
+<td align="left">替代<code>if-else</code>、状态机、类型判断</td>
+<td align="left"><strong>并发编程</strong>、goroutine协调、超时控制、多路复用</td>
+</tr>
+</tbody></table>
+</div><div class="article-licensing box"><div class="licensing-title"><p>switch和select</p><p><a href="https://cofeesy.github.io/2025/09/04/switch和select/">https://cofeesy.github.io/2025/09/04/switch和select/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-09-04</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-09-04</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Goland/">Goland</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Go语言的“装箱”——你看不到的隐式转换</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/"><span class="level-item">服务器免密登陆</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "415a5d5f811847eabec9dac6ce2b3b60",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories/"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tag</p><a href="/tags/"><p class="title">1</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-04T07:48:49.000Z">2025-09-04</time></p><p class="title"><a href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">Go语言的“装箱”——你看不到的隐式转换</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-04T07:44:25.000Z">2025-09-04</time></p><p class="title"><a href="/2025/09/04/switch%E5%92%8Cselect/">switch和select</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-08-29T09:31:15.000Z">2025-08-29</time></p><p class="title"><a href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/">服务器免密登陆</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-08-28T07:56:09.000Z">2025-08-28</time></p><p class="title"><a href="/2025/08/28/cookie-and-session/">cookie_and_session</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-08-28T06:11:22.000Z">2025-08-28</time></p><p class="title"><a href="/2025/08/28/%E6%95%B0%E6%8D%AE%E5%BA%93-%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4%E5%AD%A6%E4%B9%A001/">数据库-简单操作步骤学习01</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">9</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
