@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>数据库三范式示例理解 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="理解数据库范式和函数依赖是数据库设计的基石。这些概念很抽象，但我们可以通过一个从混乱到有序的实际例子，一步步把它们弄清楚。 我们就用一个学校的“学生选课信息”表作为例子，看看它是如何从一个糟糕的设计，一步步通过范式变得“健康”的。"><meta property="og:type" content="blog"><meta property="og:title" content="数据库三范式示例理解"><meta property="og:url" content="https://cofeesy.github.io/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="理解数据库范式和函数依赖是数据库设计的基石。这些概念很抽象，但我们可以通过一个从混乱到有序的实际例子，一步步把它们弄清楚。 我们就用一个学校的“学生选课信息”表作为例子，看看它是如何从一个糟糕的设计，一步步通过范式变得“健康”的。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-09-09T08:27:20.000Z"><meta property="article:modified_time" content="2025-09-09T08:29:24.050Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="数据库"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/"},"headline":"数据库三范式示例理解","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-09-09T08:27:20.000Z","dateModified":"2025-09-09T08:29:24.050Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"理解数据库范式和函数依赖是数据库设计的基石。这些概念很抽象，但我们可以通过一个从混乱到有序的实际例子，一步步把它们弄清楚。 我们就用一个学校的“学生选课信息”表作为例子，看看它是如何从一个糟糕的设计，一步步通过范式变得“健康”的。"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-09T08:27:20.000Z" title="9/9/2025, 4:27:20 PM">2025-09-09</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-09T08:29:24.050Z" title="9/9/2025, 4:29:24 PM">2025-09-09</time></span><span class="level-item">14 minutes read (About 2112 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">数据库三范式示例理解</h1><div class="content"><p>理解数据库范式和函数依赖是数据库设计的基石。这些概念很抽象，但我们可以通过一个<strong>从混乱到有序</strong>的实际例子，一步步把它们弄清楚。</p>
+<p>我们就用一个学校的“学生选课信息”表作为例子，看看它是如何从一个糟糕的设计，一步步通过范式变得“健康”的。</p>
+<hr>
+<span id="more"></span>
+
+<h3 id="基础：函数依赖-Functional-Dependency"><a href="#基础：函数依赖-Functional-Dependency" class="headerlink" title="基础：函数依赖 (Functional Dependency)"></a>基础：函数依赖 (Functional Dependency)</h3><p>在理解范式之前，必须先理解<strong>函数依赖</strong>，因为它是判断是否符合范式的“尺子”。</p>
+<p><strong>通俗解释</strong>：在一个关系（表）中，如果通过属性A的值，我们总能<strong>唯一地确定</strong>属性B的值，那么我们就说“B函数依赖于A”，记作 <code>A -&gt; B</code>。</p>
+<ul>
+<li><code>A</code> 叫做<strong>决定因素 (Determinant)</strong></li>
+<li><code>B</code> 叫做<strong>依赖部分 (Dependent)</strong></li>
+</ul>
+<p><strong>生活化比喻</strong>：就像自动售货机。你按下一个按钮（<strong>决定因素</strong>），就会出来一个特定的商品（<strong>依赖部分</strong>）。</p>
+<ul>
+<li><code>按钮编号 -&gt; 商品名称</code></li>
+<li><code>学号 -&gt; 姓名</code> (知道学号，就能唯一确定姓名)</li>
+<li><code>身份证号 -&gt; &#123;姓名, 年龄, 性别&#125;</code> (知道身份证号，就能唯一确定这些信息)</li>
+</ul>
+<p><strong>完全函数依赖 vs. 部分函数依赖</strong><br>这个概念是理解第二范式的关键，它只在主码是<strong>复合码</strong>（由多个属性组成）时有意义。</p>
+<ul>
+<li><p><strong>完全函数依赖</strong>：一个属性<strong>必须依赖于主码的全部属性</strong>，而不是部分属性。</p>
+<ul>
+<li>例子：主码是 <code>&#123;学号, 课程号&#125;</code>。属性 <code>成绩</code> 依赖于 <code>&#123;学号, 课程号&#125;</code>。因为只知道学号无法确定成绩（不知道是哪门课的），只知道课程号也无法确定成绩（不知道是哪个学生的），必须两者都知道才行。所以，<code>成绩</code> <strong>完全函数依赖</strong>于 <code>&#123;学号, 课程号&#125;</code>。</li>
+</ul>
+</li>
+<li><p><strong>部分函数依赖</strong>：一个属性<strong>只依赖于主码的一部分属性</strong>。</p>
+<ul>
+<li>例子：主码还是 <code>&#123;学号, 课程号&#125;</code>。属性 <code>姓名</code> 只依赖于 <code>学号</code>，和 <code>课程号</code> 没关系。这就是<strong>部分函数依赖</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="第一范式-1NF"><a href="#第一范式-1NF" class="headerlink" title="第一范式 (1NF)"></a>第一范式 (1NF)</h3><p><strong>目标</strong>：确保属性的<strong>原子性</strong>，即表中的每个单元格都不可再分。</p>
+<p><strong>“人话”规则</strong>：<strong>表格里不能有“格中格”</strong>。每一列的值都必须是单一值，不能是集合或列表。</p>
+<h4 id="例子：一个糟糕的、不符合1NF的表"><a href="#例子：一个糟糕的、不符合1NF的表" class="headerlink" title="例子：一个糟糕的、不符合1NF的表"></a>例子：一个糟糕的、不符合1NF的表</h4><table>
+<thead>
+<tr>
+<th align="left">学号</th>
+<th align="left">姓名</th>
+<th align="left">选课信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">S01</td>
+<td align="left">张三</td>
+<td align="left">{ (C01, C语言, 李老师), (C02, 数据库, 王老师) }</td>
+</tr>
+<tr>
+<td align="left">S02</td>
+<td align="left">李四</td>
+<td align="left">{ (C02, 数据库, 王老师) }</td>
+</tr>
+</tbody></table>
+<p><strong>问题</strong>：“选课信息”这一列包含了多个课程，是一个<strong>集合</strong>，不是原子值。这违反了1NF。</p>
+<p><strong>如何修正</strong>：拆分！把集合拆成多行。</p>
+<h4 id="修正后，符合1NF的表"><a href="#修正后，符合1NF的表" class="headerlink" title="修正后，符合1NF的表"></a>修正后，符合1NF的表</h4><table>
+<thead>
+<tr>
+<th align="left">学号</th>
+<th align="left">姓名</th>
+<th align="left">课程号</th>
+<th align="left">课程名</th>
+<th align="left">教师名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">S01</td>
+<td align="left">张三</td>
+<td align="left">C01</td>
+<td align="left">C语言</td>
+<td align="left">李老师</td>
+</tr>
+<tr>
+<td align="left">S01</td>
+<td align="left">张三</td>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">王老师</td>
+</tr>
+<tr>
+<td align="left">S02</td>
+<td align="left">李四</td>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">王老师</td>
+</tr>
+</tbody></table>
+<p>现在，每个单元格都是单一值了。我们达到了1NF。但是，这个表仍然很糟糕，充满了<strong>数据冗余</strong>（张三的名字、数据库课程名、王老师的名字都重复了）。这会导致<strong>更新异常</strong>（比如王老师改名了，你需要修改多行，很容易漏掉）。</p>
+<hr>
+<h3 id="第二范式-2NF"><a href="#第二范式-2NF" class="headerlink" title="第二范式 (2NF)"></a>第二范式 (2NF)</h3><p><strong>前提</strong>：必须首先满足1NF。<br><strong>目标</strong>：消除<strong>部分函数依赖</strong>。</p>
+<p><strong>“人话”规则</strong>：<strong>一张表只说一件事</strong>。表中的所有非主属性，都必须<strong>完全依赖</strong>于整个主码，而不是主码的一部分。</p>
+<h4 id="例子：分析我们符合1NF的表"><a href="#例子：分析我们符合1NF的表" class="headerlink" title="例子：分析我们符合1NF的表"></a>例子：分析我们符合1NF的表</h4><ul>
+<li><strong>确定主码</strong>：要唯一确定一行，只知道 <code>学号</code> 不行（一个学生有多门课），只知道 <code>课程号</code> 也不行（一门课有多个学生）。所以，主码是 <strong><code>&#123;学号, 课程号&#125;</code></strong>。</li>
+<li><strong>分析函数依赖</strong>：<ul>
+<li><code>姓名</code> -&gt; 只依赖于 <code>学号</code>。（<code>学号</code> -&gt; <code>姓名</code>）</li>
+<li><code>课程名</code> -&gt; 只依赖于 <code>课程号</code>。（<code>课程号</code> -&gt; <code>课程名</code>）</li>
+<li><code>教师名</code> -&gt; 只依赖于 <code>课程号</code>。（假设一门课只有一个老师）</li>
+</ul>
+</li>
+<li><strong>发现问题</strong>：<code>姓名</code>, <code>课程名</code>, <code>教师名</code> 这些非主属性，都只依赖于主码的一部分，存在严重的<strong>部分函数依赖</strong>。这违反了2NF。</li>
+</ul>
+<p><strong>如何修正</strong>：拆分！把描述不同事物的属性拆分到不同的表中。</p>
+<ul>
+<li>跟“学生”相关的信息，单独放一张表。</li>
+<li>跟“课程”相关的信息，也单独放一张表。</li>
+<li>剩下的“学生和课程的关系”，保留在原表中。</li>
+</ul>
+<h4 id="修正后，符合2NF的表"><a href="#修正后，符合2NF的表" class="headerlink" title="修正后，符合2NF的表"></a>修正后，符合2NF的表</h4><p><strong>学生表 (Student)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">学号 (主码)</th>
+<th align="left">姓名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">S01</td>
+<td align="left">张三</td>
+</tr>
+<tr>
+<td align="left">S02</td>
+<td align="left">李四</td>
+</tr>
+</tbody></table>
+<p><strong>课程表 (Course)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">课程号 (主码)</th>
+<th align="left">课程名</th>
+<th align="left">教师名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">C01</td>
+<td align="left">C语言</td>
+<td align="left">李老师</td>
+</tr>
+<tr>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">王老师</td>
+</tr>
+</tbody></table>
+<p><strong>选课表 (SC)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">学号 (主码&#x2F;外码)</th>
+<th align="left">课程号 (主码&#x2F;外码)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">S01</td>
+<td align="left">C01</td>
+</tr>
+<tr>
+<td align="left">S01</td>
+<td align="left">C02</td>
+</tr>
+<tr>
+<td align="left">S02</td>
+<td align="left">C02</td>
+</tr>
+</tbody></table>
+<p>现在，数据冗余大大减少。每个表都只描述一件事：学生表只说学生，课程表只说课程。我们达到了2NF。但是，课程表里似乎还有问题…</p>
+<hr>
+<h3 id="第三范式-3NF"><a href="#第三范式-3NF" class="headerlink" title="第三范式 (3NF)"></a>第三范式 (3NF)</h3><p><strong>前提</strong>：必须首先满足2NF。<br><strong>目标</strong>：消除<strong>传递函数依赖</strong>。</p>
+<p><strong>传递函数依赖</strong>：如果 <code>A -&gt; B</code> 且 <code>B -&gt; C</code>，那么存在 <code>A -&gt; C</code> 的传递依赖。这里A是主码，B和C都是非主属性。</p>
+<p><strong>“人话”规则</strong>：<strong>表里的所有非主属性，都必须直接依赖于主码，不能“隔着”另一个非主属性去依赖主码。</strong></p>
+<h4 id="例子：分析我们符合2NF的课程表"><a href="#例子：分析我们符合2NF的课程表" class="headerlink" title="例子：分析我们符合2NF的课程表"></a>例子：分析我们符合2NF的课程表</h4><p><strong>课程表 (Course)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">课程号 (主码)</th>
+<th align="left">课程名</th>
+<th align="left">教师名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">C01</td>
+<td align="left">C语言</td>
+<td align="left">李老师</td>
+</tr>
+<tr>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">王老师</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>假设我们再加一个“教师办公室”列</strong>：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">课程号 (主码)</th>
+<th align="left">课程名</th>
+<th align="left">教师名</th>
+<th align="left">教师办公室</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">C01</td>
+<td align="left">C语言</td>
+<td align="left">李老师</td>
+<td align="left">办公室A</td>
+</tr>
+<tr>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">王老师</td>
+<td align="left">办公室B</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>分析函数依赖</strong>：<ul>
+<li><code>课程号 -&gt; 课程名</code> （直接依赖）</li>
+<li><code>课程号 -&gt; 教师名</code> （直接依赖，假设一门课只有一个老师）</li>
+<li>但是，<code>教师名 -&gt; 教师办公室</code>！</li>
+</ul>
+</li>
+<li><strong>发现问题</strong>：<code>教师办公室</code> 并不直接依赖于 <code>课程号</code>。它依赖于 <code>教师名</code>，而 <code>教师名</code> 才依赖于 <code>课程号</code>。这就是<strong>传递函数依赖</strong> (<code>课程号 -&gt; 教师名 -&gt; 教师办公室</code>)。这违反了3NF。</li>
+<li><strong>这会带来什么问题？</strong> 如果王老师同时教了10门课，他的办公室信息就会重复10次。如果他换了办公室，你需要修改10行。</li>
+</ul>
+<p><strong>如何修正</strong>：再拆分！把“教师”这个独立的事物也拆出去。</p>
+<h4 id="修正后，符合3NF的表"><a href="#修正后，符合3NF的表" class="headerlink" title="修正后，符合3NF的表"></a>修正后，符合3NF的表</h4><p><strong>课程表 (Course)</strong> (现在只说课程)</p>
+<table>
+<thead>
+<tr>
+<th align="left">课程号 (主码)</th>
+<th align="left">课程名</th>
+<th align="left">教师号 (外码)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">C01</td>
+<td align="left">C语言</td>
+<td align="left">T01</td>
+</tr>
+<tr>
+<td align="left">C02</td>
+<td align="left">数据库</td>
+<td align="left">T02</td>
+</tr>
+</tbody></table>
+<p><strong>教师表 (Teacher)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">教师号 (主码)</th>
+<th align="left">教师名</th>
+<th align="left">教师办公室</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">T01</td>
+<td align="left">李老师</td>
+<td align="left">办公室A</td>
+</tr>
+<tr>
+<td align="left">T02</td>
+<td align="left">王老师</td>
+<td align="left">办公室B</td>
+</tr>
+</tbody></table>
+<p><strong>学生表 (Student)</strong> (不变)<br><strong>选课表 (SC)</strong> (不变)</p>
+<p>现在，所有的非主属性都<strong>直接</strong>且<strong>完全</strong>地依赖于它们所在表的主码，没有部分依赖，也没有传递依赖。我们的数据库设计达到了3NF，变得非常健康、不易出错。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th align="left">范式</th>
+<th align="left">“人话”规则</th>
+<th align="left">技术规则</th>
+<th align="left">解决方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1NF</strong></td>
+<td align="left">表格里不能有“格中格”</td>
+<td align="left">属性必须是原子的，不可再分</td>
+<td align="left">拆分行（消除重复组）</td>
+</tr>
+<tr>
+<td align="left"><strong>2NF</strong></td>
+<td align="left">一张表只说一件事</td>
+<td align="left">消除非主属性对主码的<strong>部分函数依赖</strong></td>
+<td align="left">拆分表（消除部分依赖）</td>
+</tr>
+<tr>
+<td align="left"><strong>3NF</strong></td>
+<td align="left">属性必须直接依赖主码，不能“隔山打牛”</td>
+<td align="left">消除非主属性对主码的<strong>传递函数依赖</strong></td>
+<td align="left">再拆分表（消除传递依赖）</td>
+</tr>
+</tbody></table>
+</div><div class="article-licensing box"><div class="licensing-title"><p>数据库三范式示例理解</p><p><a href="https://cofeesy.github.io/2025/09/09/数据库三范式示例理解/">https://cofeesy.github.io/2025/09/09/数据库三范式示例理解/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-09-09</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-09-09</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/"><span class="level-item">Go语言的“装箱”——你看不到的隐式转换</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "334ef2cf9549f0f361cff48143da19ba",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">11</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">2</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-09T08:27:20.000Z">2025-09-09</time></p><p class="title"><a href="/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/">数据库三范式示例理解</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-04T07:48:49.000Z">2025-09-04</time></p><p class="title"><a href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">Go语言的“装箱”——你看不到的隐式转换</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-04T07:44:25.000Z">2025-09-04</time></p><p class="title"><a href="/2025/09/04/switch%E5%92%8Cselect/">switch和select</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-08-29T09:31:15.000Z">2025-08-29</time></p><p class="title"><a href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/">服务器免密登陆</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-08-28T07:56:09.000Z">2025-08-28</time></p><p class="title"><a href="/2025/08/28/cookie-and-session/">cookie_and_session</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
