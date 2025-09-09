@@ -35,33 +35,7 @@
 <ul>
 <li><code>switch</code> 是 <strong>值（Value）</strong> 的选择。</li>
 <li><code>select</code> 是 <strong>通道（Channel）</strong> 的选择。</li>
-</ul></div><a class="article-more button is-small is-size-7" href="/2025/09/04/switch%E5%92%8Cselect/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-08-29T09:31:15.000Z" title="8/29/2025, 5:31:15 PM">2025-08-29</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-08-29T09:34:45.132Z" title="8/29/2025, 5:34:45 PM">2025-08-29</time></span><span class="level-item">3 minutes read (About 459 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/">服务器免密登陆</a></p><div class="content"><h3 id="配置-SSH-免密登录（Mac）"><a href="#配置-SSH-免密登录（Mac）" class="headerlink" title="配置 SSH 免密登录（Mac）"></a>配置 SSH 免密登录（Mac）</h3><p>这个方案的原理是：你在你的 Mac 电脑上生成一对“密钥”（一个公钥，一个私钥），然后把“公钥”（相当于一把锁）放到远程服务器上你账户的“钥匙串”里。之后，你每次用 <code>scp</code> 或 <code>ssh</code> 连接时，你的电脑会自动用“私钥”（你的钥匙）去开服务器上的那把锁，整个过程无需输入密码。</p>
-<p><strong>操作步骤 (只需要做一次)：</strong></p>
-<ol>
-<li><p><strong>检查是否已有 SSH 密钥</strong><br>打开终端，输入：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果显示文件存在，说明你已经有密钥了，可以跳到第 3 步。</li>
-<li>如果提示 <code>No such file or directory</code>，你需要先生成一对密钥。</li>
-</ul>
-</li>
-<li><p><strong>生成新的 SSH 密钥</strong> (如果需要)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096</span><br></pre></td></tr></table></figure>
-<ul>
-<li>它会提示你保存文件的位置，直接按回车（默认是 <code>~/.ssh/id_rsa</code>）。</li>
-<li>它会提示你输入 passphrase (密码短语)，为了方便自动化，<strong>直接按回车，留空即可</strong>。再按一次回车确认。</li>
-<li>执行完毕后，<code>~/.ssh/</code> 目录下就会生成 <code>id_rsa</code> (私钥) 和 <code>id_rsa.pub</code> (公钥)。</li>
-</ul>
-</li>
-<li><p><strong>将你的公钥复制到远程服务器</strong><br>这有一条非常方便的命令 <code>ssh-copy-id</code> 来自动完成这件事。<strong>请注意，这条命令需要你指定正确的端口号</strong>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id username@ip</span><br></pre></td></tr></table></figure>
-<ul>
-<li>这条命令会提示你输入一次用户的密码。这是<strong>最后一次</strong>你需要为这个连接输入密码了。</li>
-<li>它会自动把你的公钥 (<code>~/.ssh/id_rsa.pub</code> 的内容) 追加到远程服务器的 <code>~/.ssh/authorized_keys</code> 文件中。</li>
-</ul>
-</li>
-</ol>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-08-28T07:56:09.000Z" title="8/28/2025, 3:56:09 PM">2025-08-28</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-08-28T07:57:22.764Z" title="8/28/2025, 3:57:22 PM">2025-08-28</time></span><span class="level-item">4 minutes read (About 668 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/08/28/cookie-and-session/">cookie_and_session</a></p><div class="content"><h3 id="标准-Session-工作流程"><a href="#标准-Session-工作流程" class="headerlink" title="标准 Session 工作流程"></a>标准 Session 工作流程</h3><ol>
+</ul></div><a class="article-more button is-small is-size-7" href="/2025/09/04/switch%E5%92%8Cselect/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-08-29T09:31:15.000Z" title="8/29/2025, 5:31:15 PM">2025-08-29</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-09T07:57:54.805Z" title="9/9/2025, 3:57:54 PM">2025-09-09</time></span><span class="level-item">3 minutes read (About 454 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/">服务器免密登陆</a></p><div class="content"><h3 id="配置-SSH-免密登录（Mac）"><a href="#配置-SSH-免密登录（Mac）" class="headerlink" title="配置 SSH 免密登录（Mac）"></a>配置 SSH 免密登录（Mac）</h3><p>方案的原理是：在 Mac 电脑上生成一对“密钥”（一个公钥，一个私钥），然后把“公钥”（相当于一把锁）放到远程服务器上账户的“钥匙串”里。之后，你每次用 <code>scp</code> 或 <code>ssh</code> 连接时，你的电脑会自动用“私钥”（你的钥匙）去开服务器上的那把锁，整个过程无需输入密码。</p></div><a class="article-more button is-small is-size-7" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-08-28T07:56:09.000Z" title="8/28/2025, 3:56:09 PM">2025-08-28</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-08-28T07:57:22.764Z" title="8/28/2025, 3:57:22 PM">2025-08-28</time></span><span class="level-item">4 minutes read (About 668 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/08/28/cookie-and-session/">cookie_and_session</a></p><div class="content"><h3 id="标准-Session-工作流程"><a href="#标准-Session-工作流程" class="headerlink" title="标准 Session 工作流程"></a>标准 Session 工作流程</h3><ol>
 <li><strong>客户端首次请求 (Client’s First Request)</strong><ul>
 <li>用户通过浏览器第一次访问服务器。</li>
 </ul>
