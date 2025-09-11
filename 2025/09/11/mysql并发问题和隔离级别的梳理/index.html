@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>mysql并发问题和隔离级别的梳理 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="关于—并发问题、事务隔离级别、InnoDB的实现——这三个概念是数据库理论与实践完美结合的典范。它们之间是**“问题 -&amp;gt; 解决方案 -&amp;gt; 具体实现”**的递进关系。 我们来把这条逻辑链彻底理顺。"><meta property="og:type" content="blog"><meta property="og:title" content="mysql并发问题和隔离级别的梳理"><meta property="og:url" content="https://cofeesy.github.io/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="关于—并发问题、事务隔离级别、InnoDB的实现——这三个概念是数据库理论与实践完美结合的典范。它们之间是**“问题 -&amp;gt; 解决方案 -&amp;gt; 具体实现”**的递进关系。 我们来把这条逻辑链彻底理顺。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-09-11T01:55:27.000Z"><meta property="article:modified_time" content="2025-09-11T02:07:58.460Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="数据库"><meta property="article:tag" content="mysql"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/"},"headline":"mysql并发问题和隔离级别的梳理","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-09-11T01:55:27.000Z","dateModified":"2025-09-11T02:07:58.460Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"关于—并发问题、事务隔离级别、InnoDB的实现——这三个概念是数据库理论与实践完美结合的典范。它们之间是**“问题 -&gt; 解决方案 -&gt; 具体实现”**的递进关系。 我们来把这条逻辑链彻底理顺。"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-11T01:55:27.000Z" title="9/11/2025, 9:55:27 AM">2025-09-11</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-11T02:07:58.460Z" title="9/11/2025, 10:07:58 AM">2025-09-11</time></span><span class="level-item">13 minutes read (About 1917 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">mysql并发问题和隔离级别的梳理</h1><div class="content"><p>关于—<strong>并发问题</strong>、<strong>事务隔离级别</strong>、<strong>InnoDB的实现</strong>——这三个概念是数据库理论与实践完美结合的典范。它们之间是**“问题 -&gt; 解决方案 -&gt; 具体实现”**的递进关系。</p>
+<p>我们来把这条逻辑链彻底理顺。</p>
+<span id="more"></span>
+<hr>
+<h3 id="1-源头：并发带来的“三大问题”"><a href="#1-源头：并发带来的“三大问题”" class="headerlink" title="1. 源头：并发带来的“三大问题”"></a>1. 源头：并发带来的“三大问题”</h3><p>当多个事务<strong>同时</strong>对同一份数据进行读写操作时，如果没有适当的控制，就会导致数据错乱。这种错乱可以归结为三种经典的并发问题：</p>
+<ul>
+<li><p><strong>脏读 (Dirty Read)</strong>:</p>
+<ul>
+<li><strong>场景</strong>: 事务A修改了一条数据，但<strong>还未提交</strong>。事务B此时读取了这条被修改过的“脏”数据。如果事务A最终<strong>回滚</strong>了，那么事务B读取到的就是一条从未真实存在过的垃圾数据。<strong>（ps:未提交是指事务对数据的修改还处于一个临时的、未被最终确认的“草稿”状态，后续可以通过回滚恢复，而提交是一种确定的状态，已确认的状态的修改不称作回滚而是发起新的事务对其的修改，两者与是否写入磁盘无实质性的关系）</strong></li>
+<li><strong>比喻</strong>: 你看到朋友购物车里加了一件衣服（未付款），你就以为他买了。结果他最后清空了购物车，你的信息就错了。</li>
+</ul>
+</li>
+<li><p><strong>不可重复读 (Non-Repeatable Read)</strong>:</p>
+<ul>
+<li><strong>场景</strong>: 事务A在<strong>同一个事务内</strong>，先后两次读取同一条数据，但两次读取的结果<strong>不同</strong>。这是因为在两次读取之间，事务B修改了这条数据并<strong>提交</strong>了。</li>
+<li><strong>比喻</strong>: 你第一次查账户余额是1000元。你老婆在另一台手机上给你转了500元并成功到账。你再查一次，发现余额变成了1500元。在你的这次“查询业务”中，数据发生了变化。</li>
+<li><strong>重点</strong>: 关注的是<strong>同一条记录的修改（UPDATE）</strong>。</li>
+</ul>
+</li>
+<li><p><strong>幻读 (Phantom Read)</strong>:</p>
+<ul>
+<li><strong>场景</strong>: 事务A在<strong>同一个事务内</strong>，先后两次按<strong>相同条件</strong>查询一个范围的数据，但两次查询返回的<strong>记录行数不同</strong>。这是因为在两次查询之间，事务B**插入（INSERT）<strong>或</strong>删除（DELETE）**了符合该条件的新记录。</li>
+<li><strong>比喻</strong>: 你第一次统计你们部门“所有工资大于1万”的员工，发现有5个人。这时，HR给一个新员工办理了入职，工资是1.2万。你再统计一次，发现变成了6个人，多出来一个像“幻影”一样的员工。</li>
+<li><strong>重点</strong>: 关注的是<strong>一个范围内的记录增减（INSERT&#x2F;DELETE）</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-对策：SQL标准定义的“四大隔离级别”"><a href="#2-对策：SQL标准定义的“四大隔离级别”" class="headerlink" title="2. 对策：SQL标准定义的“四大隔离级别”"></a>2. 对策：SQL标准定义的“四大隔离级别”</h3><p>为了解决上述的并发问题，SQL标准委员会定义了四种<strong>事务隔离级别（Transaction Isolation Levels）</strong>。它们就像四个“安全挡位”，级别越高，数据一致性越好，但并发性能可能会越差。</p>
+<table>
+<thead>
+<tr>
+<th align="left">隔离级别</th>
+<th align="left">能解决的问题</th>
+<th align="left">可能发生的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>读未提交 (Read Uncommitted)</strong></td>
+<td align="left">(几乎没有)</td>
+<td align="left">脏读、不可重复读、幻读</td>
+</tr>
+<tr>
+<td align="left"><strong>读提交 (Read Committed)</strong></td>
+<td align="left">解决了<strong>脏读</strong></td>
+<td align="left">不可重复读、幻读</td>
+</tr>
+<tr>
+<td align="left"><strong>可重复读 (Repeatable Read)</strong></td>
+<td align="left">解决了<strong>脏读</strong>、<strong>不可重复读</strong></td>
+<td align="left"><strong>幻读</strong> (理论上)</td>
+</tr>
+<tr>
+<td align="left"><strong>串行化 (Serializable)</strong></td>
+<td align="left">解决了<strong>所有问题</strong></td>
+<td align="left">并发性能最差</td>
+</tr>
+</tbody></table>
+<p><strong>关系一目了然：</strong></p>
+<ul>
+<li><strong>隔离级别就是为了解决并发问题而提出的“解决方案规范”</strong>。</li>
+<li>你想解决什么程度的问题，就选择对应的隔离级别。</li>
+<li>比如，大多数数据库（如Oracle, SQL Server）的默认级别是“读提交”，因为它在保证基本数据不错乱（没有脏读）和提供良好并发性能之间取得了很好的平衡。</li>
+</ul>
+<hr>
+<h3 id="3-具体实现：MySQL-InnoDB的“独特答卷”"><a href="#3-具体实现：MySQL-InnoDB的“独特答卷”" class="headerlink" title="3. 具体实现：MySQL InnoDB的“独特答卷”"></a>3. 具体实现：MySQL InnoDB的“独特答卷”</h3><p>现在，轮到InnoDB出场了。InnoDB作为MySQL的具体实现，它需要遵循SQL标准的这些隔离级别规范，但它可以有自己的<strong>独特实现方式</strong>。</p>
+<p><strong>InnoDB的核心武器是MVCC（多版本并发控制）</strong>，我们之前讨论过。正是MVCC，让InnoDB在实现隔离级别时，表现出了一些非常有趣的特性，特别是对于“可重复读”级别。</p>
+<ul>
+<li><strong>读未提交</strong>: InnoDB实现它很简单，就是读数据时不加锁，也不用MVCC，直接读最新的。</li>
+<li><strong>读提交 (RC)</strong>: InnoDB通过MVCC实现。<strong>每条<code>SELECT</code>语句执行时，都创建一个新的Read View</strong>。这保证了只能读到已提交的数据（解决了脏读），但每次读都可能看到不同的已提交数据（有不可重复读问题）。</li>
+<li><strong>可重复读 (RR) - 这是InnoDB的默认级别，也是最特别的</strong>：<ul>
+<li>InnoDB同样通过MVCC实现。<strong>只在事务的第一个<code>SELECT</code>语句执行时，创建一个Read View，并一直复用它</strong>。</li>
+<li><strong>神奇之处</strong>: 因为Read View被“冻结”在了事务开始的那个时刻，所以它不仅解决了不可重复读（因为你看不到别的事务的UPDATE），<strong>在大多数情况下，它也顺便解决了幻读问题！</strong> 因为新插入的行，其版本号会比你的Read View要新，所以你也“看不见”它们。</li>
+<li><strong>这就是为什么很多人说InnoDB的RR级别“几乎”解决了幻读</strong>。</li>
+<li><strong>例外（什么时候还会幻读？）</strong>: 当你在RR级别下，先<code>SELECT</code>，然后执行<code>UPDATE</code>或<code>INSERT</code>时，可能会触发<strong>当前读 (Current Read)</strong>，绕过MVCC去读取最新版本并加锁，这时就有可能感知到“幻影”的存在。</li>
+</ul>
+</li>
+<li><strong>串行化</strong>: InnoDB实现它，就是简单地给所有<code>SELECT</code>语句都隐式地加上<code>LOCK IN SHARE MODE</code>（共享读锁），彻底退回到加锁的模式，强制事务排队。</li>
+</ul>
+<hr>
+<h3 id="总结：三者之间的关系"><a href="#总结：三者之间的关系" class="headerlink" title="总结：三者之间的关系"></a>总结：三者之间的关系</h3><ol>
+<li><p><strong>“并发问题”是病症</strong>：多个用户同时操作数据库时，可能会导致脏读、不可重复读、幻读等数据不一致的“病症”。</p>
+</li>
+<li><p><strong>“隔离级别”是药方</strong>：SQL标准开出了四种不同强度的“药方”（读未提交、读提交、可重复读、串行化），明确了每种药方能治好哪些病症，以及可能有什么“副作用”（性能损耗）。</p>
+</li>
+<li><p><strong>“InnoDB的实现”是具体的制药工艺</strong>：InnoDB作为一名“制药大师”，它采用了<strong>MVCC</strong>这种先进的“制药工艺”来生产这些药方。它的工艺非常高超，以至于它生产的“可重复读”这副药，药效超出了标准预期，<strong>顺便把幻读这个病也治得七七八八了</strong>。</p>
+</li>
+</ol>
+<p>所以，它们的关系是：<strong>InnoDB通过MVCC机制，实现了SQL标准的四种隔离级别，从而为用户解决了不同程度的并发访问问题。</strong></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>mysql并发问题和隔离级别的梳理</p><p><a href="https://cofeesy.github.io/2025/09/11/mysql并发问题和隔离级别的梳理/">https://cofeesy.github.io/2025/09/11/mysql并发问题和隔离级别的梳理/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-09-11</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-09-11</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="link-muted mr-2" rel="tag" href="/tags/mysql/">mysql</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/09/10/%E5%85%B3%E4%BA%8E%E5%9B%9E%E6%9C%94%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8/"><span class="level-item">关于回朔数据的存储</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "9454c8d1e198a4dc75701a0dc8fa6457",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">3</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-11T01:55:27.000Z">2025-09-11</time></p><p class="title"><a href="/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/">mysql并发问题和隔离级别的梳理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-10T07:34:54.000Z">2025-09-10</time></p><p class="title"><a href="/2025/09/10/%E5%85%B3%E4%BA%8E%E5%9B%9E%E6%9C%94%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8/">关于回朔数据的存储</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-10T03:27:30.000Z">2025-09-10</time></p><p class="title"><a href="/2025/09/10/binlog%E5%92%8Credolog%E7%90%86%E8%A7%A3/">binlog和redolog理解</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-09T08:27:20.000Z">2025-09-09</time></p><p class="title"><a href="/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/">数据库三范式示例理解</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-04T07:48:49.000Z">2025-09-04</time></p><p class="title"><a href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">Go语言的“装箱”——你看不到的隐式转换</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">4</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
