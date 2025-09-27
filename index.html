@@ -29,7 +29,427 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-15T09:04:56.000Z" title="9/15/2025, 5:04:56 PM">2025-09-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-16T05:39:29.470Z" title="9/16/2025, 1:39:29 PM">2025-09-16</time></span><span class="level-item">2 minutes read (About 279 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p><div class="content"><blockquote>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-27T09:31:54.000Z" title="9/27/2025, 5:31:54 PM">2025-09-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-27T09:41:31.302Z" title="9/27/2025, 5:41:31 PM">2025-09-27</time></span><span class="level-item">7 minutes read (About 1022 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">linux常用命令速查表</a></p><div class="content"><span id="more"></span>
+
+<h3 id="Linux常用命令清单"><a href="#Linux常用命令清单" class="headerlink" title="Linux常用命令清单"></a><strong>Linux常用命令清单</strong></h3><h4 id="一、文件与目录操作-File-Directory-Management"><a href="#一、文件与目录操作-File-Directory-Management" class="headerlink" title="一、文件与目录操作 (File &amp; Directory Management)"></a><strong>一、文件与目录操作 (File &amp; Directory Management)</strong></h4><p>日常使用中最频繁的一类命令</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>ls</code></td>
+<td align="left">列出目录内容 (list)。</td>
+<td align="left"><code>ls</code> (列出当前目录), <code>ls -l</code> (长格式), <code>ls -a</code> (显示隐藏文件)</td>
+</tr>
+<tr>
+<td align="left"><code>cd</code></td>
+<td align="left">切换目录 (change directory)。</td>
+<td align="left"><code>cd /home/user</code>, <code>cd ..</code> (返回上一级), <code>cd ~</code> (返回家目录)</td>
+</tr>
+<tr>
+<td align="left"><code>pwd</code></td>
+<td align="left">显示当前工作目录的路径 (print working directory)。</td>
+<td align="left"><code>pwd</code></td>
+</tr>
+<tr>
+<td align="left"><code>mkdir</code></td>
+<td align="left">创建新目录 (make directory)。</td>
+<td align="left"><code>mkdir my_project</code>, <code>mkdir -p a/b/c</code> (递归创建)</td>
+</tr>
+<tr>
+<td align="left"><code>rmdir</code></td>
+<td align="left">删除空目录 (remove directory)。</td>
+<td align="left"><code>rmdir empty_folder</code></td>
+</tr>
+<tr>
+<td align="left"><code>touch</code></td>
+<td align="left">创建空文件或更新文件时间戳。</td>
+<td align="left"><code>touch new_file.txt</code></td>
+</tr>
+<tr>
+<td align="left"><code>cp</code></td>
+<td align="left">复制文件或目录 (copy)。</td>
+<td align="left"><code>cp source.txt dest.txt</code>, <code>cp -r source_dir/ dest_dir/</code></td>
+</tr>
+<tr>
+<td align="left"><code>mv</code></td>
+<td align="left">移动或重命名文件&#x2F;目录 (move)。</td>
+<td align="left"><code>mv old.txt new.txt</code> (重命名), <code>mv file.txt /tmp/</code> (移动)</td>
+</tr>
+<tr>
+<td align="left"><code>rm</code></td>
+<td align="left">删除文件或目录 (remove)。</td>
+<td align="left"><code>rm file.txt</code>, <code>rm -r directory/</code> (递归删除), <code>rm -rf dir/</code> (**慎用！**强制删除)</td>
+</tr>
+<tr>
+<td align="left"><code>find</code></td>
+<td align="left">在文件系统中查找文件。</td>
+<td align="left"><code>find . -name &quot;*.py&quot;</code> (查找当前目录下的py文件)</td>
+</tr>
+</tbody></table>
+<h4 id="二、文本文件查看与处理-Viewing-Processing-Text-Files"><a href="#二、文本文件查看与处理-Viewing-Processing-Text-Files" class="headerlink" title="二、文本文件查看与处理 (Viewing &amp; Processing Text Files)"></a><strong>二、文本文件查看与处理 (Viewing &amp; Processing Text Files)</strong></h4><p>在Linux中，一切皆文件。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>cat</code></td>
+<td align="left">查看整个文件内容 (concatenate)。</td>
+<td align="left"><code>cat file.txt</code></td>
+</tr>
+<tr>
+<td align="left"><code>less</code></td>
+<td align="left">分页查看文件内容，功能比<code>more</code>强大。</td>
+<td align="left"><code>less large_file.log</code> (可用方向键滚动, <code>q</code>退出)</td>
+</tr>
+<tr>
+<td align="left"><code>head</code></td>
+<td align="left">查看文件的前几行。</td>
+<td align="left"><code>head -n 20 file.txt</code> (查看前20行)</td>
+</tr>
+<tr>
+<td align="left"><code>tail</code></td>
+<td align="left">查看文件的后几行。</td>
+<td align="left"><code>tail -n 20 file.txt</code> (查看后20行), <code>tail -f app.log</code> (实时监控)</td>
+</tr>
+<tr>
+<td align="left"><code>grep</code></td>
+<td align="left">在文本中搜索匹配的行 (global regular expression print)。</td>
+<td align="left"><code>grep &quot;error&quot; log.txt</code>, <code>cat file.txt | grep &quot;keyword&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>wc</code></td>
+<td align="left">统计文件的行数、单词数、字符数 (word count)。</td>
+<td align="left"><code>wc -l file.txt</code> (只统计行数)</td>
+</tr>
+<tr>
+<td align="left"><code>diff</code></td>
+<td align="left">比较两个文件的差异。</td>
+<td align="left"><code>diff file1.txt file2.txt</code></td>
+</tr>
+</tbody></table>
+<h4 id="三、系统信息与监控-System-Information-Monitoring"><a href="#三、系统信息与监控-System-Information-Monitoring" class="headerlink" title="三、系统信息与监控 (System Information &amp; Monitoring)"></a><strong>三、系统信息与监控 (System Information &amp; Monitoring)</strong></h4><p>故障排查和性能优化须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>top</code> &#x2F; <code>htop</code></td>
+<td align="left">实时显示系统进程和资源占用情况。</td>
+<td align="left"><code>top</code> (<code>htop</code>是<code>top</code>的彩色增强版，需安装)</td>
+</tr>
+<tr>
+<td align="left"><code>ps</code></td>
+<td align="left">显示当前进程的快照 (process status)。</td>
+<td align="left"><code>ps aux</code> (显示所有进程), <code>ps -ef | grep &quot;nginx&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>kill</code></td>
+<td align="left">终止进程。</td>
+<td align="left"><code>kill 12345</code> (终止PID为12345的进程), <code>kill -9 12345</code> (强制终止)</td>
+</tr>
+<tr>
+<td align="left"><code>df</code></td>
+<td align="left">查看磁盘空间使用情况 (disk free)。</td>
+<td align="left"><code>df -h</code> (以人类可读格式显示)</td>
+</tr>
+<tr>
+<td align="left"><code>du</code></td>
+<td align="left">查看文件或目录的磁盘占用大小 (disk usage)。</td>
+<td align="left"><code>du -sh /path/to/dir</code> (查看目录总大小)</td>
+</tr>
+<tr>
+<td align="left"><code>free</code></td>
+<td align="left">查看内存使用情况。</td>
+<td align="left"><code>free -h</code></td>
+</tr>
+<tr>
+<td align="left"><code>uname</code></td>
+<td align="left">显示系统内核信息。</td>
+<td align="left"><code>uname -a</code> (显示所有信息)</td>
+</tr>
+<tr>
+<td align="left"><code>ifconfig</code> &#x2F; <code>ip a</code></td>
+<td align="left">查看和配置网络接口。</td>
+<td align="left"><code>ip a</code> (新系统推荐)</td>
+</tr>
+<tr>
+<td align="left"><code>ping</code></td>
+<td align="left">测试网络连通性。</td>
+<td align="left"><code>ping google.com</code></td>
+</tr>
+</tbody></table>
+<h4 id="四、用户与权限管理-User-Permission-Management"><a href="#四、用户与权限管理-User-Permission-Management" class="headerlink" title="四、用户与权限管理 (User &amp; Permission Management)"></a><strong>四、用户与权限管理 (User &amp; Permission Management)</strong></h4><p>多用户系统的权限管理须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>sudo</code></td>
+<td align="left">以超级用户（root）权限执行命令。</td>
+<td align="left"><code>sudo apt-get update</code></td>
+</tr>
+<tr>
+<td align="left"><code>su</code></td>
+<td align="left">切换用户。</td>
+<td align="left"><code>su - username</code></td>
+</tr>
+<tr>
+<td align="left"><code>chmod</code></td>
+<td align="left">修改文件或目录的权限 (change mode)。</td>
+<td align="left"><code>chmod +x script.sh</code> (增加执行权限), <code>chmod 755 file</code></td>
+</tr>
+<tr>
+<td align="left"><code>chown</code></td>
+<td align="left">修改文件或目录的所有者 (change owner)。</td>
+<td align="left"><code>sudo chown user:group file</code></td>
+</tr>
+<tr>
+<td align="left"><code>whoami</code></td>
+<td align="left">显示当前登录的用户名。</td>
+<td align="left"><code>whoami</code></td>
+</tr>
+<tr>
+<td align="left"><code>passwd</code></td>
+<td align="left">修改用户密码。</td>
+<td align="left"><code>passwd</code></td>
+</tr>
+</tbody></table>
+<h4 id="五、软件安装与管理-Software-Installation-Management"><a href="#五、软件安装与管理-Software-Installation-Management" class="headerlink" title="五、软件安装与管理 (Software Installation &amp; Management)"></a><strong>五、软件安装与管理 (Software Installation &amp; Management)</strong></h4><p>不同的Linux发行版使用不同的包管理器。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令 (Debian&#x2F;Ubuntu)</th>
+<th align="left">命令 (CentOS&#x2F;RHEL&#x2F;Fedora)</th>
+<th align="left">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>apt-get update</code></td>
+<td align="left"><code>yum check-update</code></td>
+<td align="left">更新软件包列表</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get upgrade</code></td>
+<td align="left"><code>yum upgrade</code></td>
+<td align="left">升级所有已安装的包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get install &lt;pkg&gt;</code></td>
+<td align="left"><code>yum install &lt;pkg&gt;</code></td>
+<td align="left">安装一个新软件包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get remove &lt;pkg&gt;</code></td>
+<td align="left"><code>yum remove &lt;pkg&gt;</code></td>
+<td align="left">卸载一个软件包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-cache search &lt;kw&gt;</code></td>
+<td align="left"><code>yum search &lt;kw&gt;</code></td>
+<td align="left">搜索软件包</td>
+</tr>
+</tbody></table>
+<h4 id="六、压缩与解压-Archiving-Compression"><a href="#六、压缩与解压-Archiving-Compression" class="headerlink" title="六、压缩与解压 (Archiving &amp; Compression)"></a><strong>六、压缩与解压 (Archiving &amp; Compression)</strong></h4><p>传输和备份文件须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>tar</code></td>
+<td align="left">打包和解包文件 (tape archive)。</td>
+<td align="left"><code>tar -czvf archive.tar.gz dir/</code> (打包压缩), <code>tar -xzvf archive.tar.gz</code> (解压)</td>
+</tr>
+<tr>
+<td align="left"><code>zip</code> &#x2F; <code>unzip</code></td>
+<td align="left">创建和解压.zip文件。</td>
+<td align="left"><code>zip -r archive.zip dir/</code>, <code>unzip archive.zip</code></td>
+</tr>
+<tr>
+<td align="left"><code>gzip</code> &#x2F; <code>gunzip</code></td>
+<td align="left">压缩和解压.gz文件。</td>
+<td align="left"><code>gzip file.txt</code> (生成file.txt.gz), <code>gunzip file.txt.gz</code></td>
+</tr>
+</tbody></table>
+<hr>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-27T09:31:38.000Z" title="9/27/2025, 5:31:38 PM">2025-09-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-27T09:43:37.897Z" title="9/27/2025, 5:43:37 PM">2025-09-27</time></span><span class="level-item">2 minutes read (About 352 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/27/mysql%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">mysql常用命令速查表</a></p><div class="content"><span id="more"></span>
+
+<h3 id="mysql常用命令清单"><a href="#mysql常用命令清单" class="headerlink" title="mysql常用命令清单"></a><strong>mysql常用命令清单</strong></h3><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>连接与退出</strong></td>
+<td><code>mysql -u 用户名 -p</code></td>
+<td>登录（输入密码）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>mysql -u 用户名 -p 数据库名</code></td>
+<td>直接进入指定数据库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>exit;</code> &#x2F; <code>quit;</code> &#x2F; <code>\q</code></td>
+<td>退出 MySQL</td>
+</tr>
+<tr>
+<td><strong>数据库操作</strong></td>
+<td><code>SHOW DATABASES;</code></td>
+<td>查看所有数据库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>CREATE DATABASE db_name;</code></td>
+<td>创建数据库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>DROP DATABASE db_name;</code></td>
+<td>删除数据库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>USE db_name;</code></td>
+<td>切换数据库</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SELECT DATABASE();</code></td>
+<td>查看当前数据库</td>
+</tr>
+<tr>
+<td><strong>表操作</strong></td>
+<td><code>SHOW TABLES;</code></td>
+<td>查看当前数据库下所有表</td>
+</tr>
+<tr>
+<td></td>
+<td><code>DESCRIBE table_name;</code></td>
+<td>查看表结构（字段、类型等）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SHOW CREATE TABLE table_name\G;</code></td>
+<td>查看建表语句</td>
+</tr>
+<tr>
+<td></td>
+<td><code>CREATE TABLE table_name (id INT);</code></td>
+<td>创建表（示例）</td>
+</tr>
+<tr>
+<td></td>
+<td><code>DROP TABLE table_name;</code></td>
+<td>删除表</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ALTER TABLE table_name ADD col INT;</code></td>
+<td>添加列</td>
+</tr>
+<tr>
+<td></td>
+<td><code>ALTER TABLE table_name DROP col;</code></td>
+<td>删除列</td>
+</tr>
+<tr>
+<td><strong>数据操作 (CRUD)</strong></td>
+<td><code>INSERT INTO users (id, name) VALUES (1, &#39;Alice&#39;);</code></td>
+<td>插入数据</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SELECT * FROM users;</code></td>
+<td>查询所有数据</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SELECT name FROM users WHERE id=1;</code></td>
+<td>条件查询</td>
+</tr>
+<tr>
+<td></td>
+<td><code>UPDATE users SET name=&#39;Bob&#39; WHERE id=1;</code></td>
+<td>更新数据</td>
+</tr>
+<tr>
+<td></td>
+<td><code>DELETE FROM users WHERE id=1;</code></td>
+<td>删除数据</td>
+</tr>
+<tr>
+<td><strong>用户与权限</strong></td>
+<td><code>SELECT user, host FROM mysql.user;</code></td>
+<td>查看用户</td>
+</tr>
+<tr>
+<td></td>
+<td><code>CREATE USER &#39;username&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;pwd&#39;;</code></td>
+<td>创建用户</td>
+</tr>
+<tr>
+<td></td>
+<td><code>GRANT ALL PRIVILEGES ON db_name.* TO &#39;username&#39;@&#39;localhost&#39;;</code></td>
+<td>授权</td>
+</tr>
+<tr>
+<td></td>
+<td><code>FLUSH PRIVILEGES;</code></td>
+<td>刷新权限</td>
+</tr>
+<tr>
+<td></td>
+<td><code>DROP USER &#39;username&#39;@&#39;localhost&#39;;</code></td>
+<td>删除用户</td>
+</tr>
+<tr>
+<td><strong>其他常用</strong></td>
+<td><code>STATUS;</code></td>
+<td>查看服务器状态</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SHOW PROCESSLIST;</code></td>
+<td>查看当前连接</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SHOW VARIABLES LIKE &#39;%char%&#39;;</code></td>
+<td>查看字符集相关设置</td>
+</tr>
+<tr>
+<td></td>
+<td><code>SOURCE /path/to/file.sql;</code></td>
+<td>执行 SQL 文件</td>
+</tr>
+</tbody></table>
+<p><code>ps:SQL关键字大小写不影响运行</code></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-15T09:04:56.000Z" title="9/15/2025, 5:04:56 PM">2025-09-15</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-16T05:39:29.470Z" title="9/16/2025, 1:39:29 PM">2025-09-16</time></span><span class="level-item">2 minutes read (About 279 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p><div class="content"><blockquote>
 <p><strong>摘要</strong>：记录一下比较常用的快捷键使用</p>
 </blockquote></div><a class="article-more button is-small is-size-7" href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-13T10:20:55.000Z" title="9/13/2025, 6:20:55 PM">2025-09-13</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-13T10:22:25.109Z" title="9/13/2025, 6:22:25 PM">2025-09-13</time></span><span class="level-item">11 minutes read (About 1685 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/13/Gin%E8%B7%AF%E7%94%B1-%E5%86%92%E5%8F%B7-%E4%B8%8E%E6%98%9F%E5%8F%B7/">Gin路由:冒号(:)与星号(*)</a></p><div class="content"><blockquote>
 <p><strong>摘要</strong>：在使用Gin框架时，我们经常会用到 <code>:</code> 和 <code>*</code> 来定义动态路由。它们看起来相似，但行为却大相径庭。<code>GET /user/:name</code> 和 <code>GET /user/:name/*action</code> 到底有什么区别？为什么有时访问一个URL会被自动重定向？本文将带你深入Gin路由匹配的核心，彻底搞懂路径参数和通配符的微妙之处，让你在设计API时更加得心应手。</p>
@@ -39,12 +459,7 @@
 <p>我们来把这条逻辑链彻底理顺。</p></div><a class="article-more button is-small is-size-7" href="/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-10T07:34:54.000Z" title="9/10/2025, 3:34:54 PM">2025-09-10</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-10T09:55:52.024Z" title="9/10/2025, 5:55:52 PM">2025-09-10</time></span><span class="level-item">15 minutes read (About 2278 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/10/%E5%85%B3%E4%BA%8E%E5%9B%9E%E6%9C%94%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8/">关于回朔数据的存储</a></p><div class="content"><h3 id="问题：历史信息是map存储吗？"><a href="#问题：历史信息是map存储吗？" class="headerlink" title="问题：历史信息是map存储吗？"></a>问题：历史信息是map存储吗？</h3><p><strong>结论先行：</strong><br>历史数据<strong>不是</strong>类似<code>map</code>那样独立存储的，而是以**“版本链”<strong>的形式，串联在一种叫做</strong><code>undo log</code><strong>的特殊日志文件中。这个存储方式确实会占用</strong>额外且可能相当大**的磁盘空间。</p></div><a class="article-more button is-small is-size-7" href="/2025/09/10/%E5%85%B3%E4%BA%8E%E5%9B%9E%E6%9C%94%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-10T03:27:30.000Z" title="9/10/2025, 11:27:30 AM">2025-09-10</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-10T09:57:03.392Z" title="9/10/2025, 5:57:03 PM">2025-09-10</time></span><span class="level-item">10 minutes read (About 1547 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/10/binlog%E5%92%8Credolog%E7%90%86%E8%A7%A3/">binlog和redolog理解</a></p><div class="content"><p><code>redo log</code> 和 <code>binlog</code> 是 MySQL 中两个非常重要但功能完全不同的日志系统。它们经常被放在一起比较，因为它们都记录了数据库的变更，但它们的<strong>设计目的、记录内容、所在层次和使用场景</strong>都有着本质的区别。</p></div><a class="article-more button is-small is-size-7" href="/2025/09/10/binlog%E5%92%8Credolog%E7%90%86%E8%A7%A3/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-09T08:27:20.000Z" title="9/9/2025, 4:27:20 PM">2025-09-09</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-10T09:57:09.355Z" title="9/10/2025, 5:57:09 PM">2025-09-10</time></span><span class="level-item">14 minutes read (About 2112 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/">数据库三范式示例理解</a></p><div class="content"><p>理解数据库范式和函数依赖是数据库设计的基石。这些概念很抽象，但我们可以通过一个<strong>从混乱到有序</strong>的实际例子，一步步把它们弄清楚。</p>
 <p>我们就用一个学校的“学生选课信息”表作为例子，看看它是如何从一个糟糕的设计，一步步通过范式变得“健康”的。</p>
 <hr></div><a class="article-more button is-small is-size-7" href="/2025/09/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E8%8C%83%E5%BC%8F%E7%A4%BA%E4%BE%8B%E7%90%86%E8%A7%A3/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-04T07:48:49.000Z" title="9/4/2025, 3:48:49 PM">2025-09-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-04T07:49:49.774Z" title="9/4/2025, 3:49:49 PM">2025-09-04</time></span><span class="level-item">11 minutes read (About 1648 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">Go语言的“装箱”——你看不到的隐式转换</a></p><div class="content"><p><strong>Go语言的“装箱”（Boxing）机制，就是当一个具体类型（Concrete Type）的值被转换成接口类型（Interface Type）时发生的隐式转换过程。</strong></p>
-<h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>你每天都在使用<code>fmt.Println()</code>，但你知道每次调用它时，Go都在幕后为你做了什么吗？你是否遇到过一个非<code>nil</code>的<code>error</code>变量，其内部却是一个<code>nil</code>指针的“陷阱”？这些问题的答案都指向同一个核心概念：<strong>装箱（Boxing）</strong>。本文将带你深入理解Go语言中这个重要但常常被忽略的隐式转换机制。</p></div><a class="article-more button is-small is-size-7" href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-04T07:44:25.000Z" title="9/4/2025, 3:44:25 PM">2025-09-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-04T07:45:07.606Z" title="9/4/2025, 3:45:07 PM">2025-09-04</time></span><span class="level-item">9 minutes read (About 1347 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/09/04/switch%E5%92%8Cselect/">switch和select</a></p><div class="content"><p><code>switch</code>和<code>select</code>在语法上看起来很相似，但它们是为解决<strong>完全不同</strong>的问题而设计的。</p>
-<p>简单来说：</p>
-<ul>
-<li><code>switch</code> 是 <strong>值（Value）</strong> 的选择。</li>
-<li><code>select</code> 是 <strong>通道（Channel）</strong> 的选择。</li>
-</ul></div><a class="article-more button is-small is-size-7" href="/2025/09/04/switch%E5%92%8Cselect/#more">Read more</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-08-29T09:31:15.000Z" title="8/29/2025, 5:31:15 PM">2025-08-29</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-09T07:57:54.805Z" title="9/9/2025, 3:57:54 PM">2025-09-09</time></span><span class="level-item">3 minutes read (About 454 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/">服务器免密登陆</a></p><div class="content"><h3 id="配置-SSH-免密登录（Mac）"><a href="#配置-SSH-免密登录（Mac）" class="headerlink" title="配置 SSH 免密登录（Mac）"></a>配置 SSH 免密登录（Mac）</h3><p>方案的原理是：在 Mac 电脑上生成一对“密钥”（一个公钥，一个私钥），然后把“公钥”（相当于一把锁）放到远程服务器上账户的“钥匙串”里。之后，你每次用 <code>scp</code> 或 <code>ssh</code> 连接时，你的电脑会自动用“私钥”（你的钥匙）去开服务器上的那把锁，整个过程无需输入密码。</p></div><a class="article-more button is-small is-size-7" href="/2025/08/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86/#more">Read more</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/page/0/">Previous</a></div><div class="pagination-next"><a href="/page/2/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">17</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">4</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-15T09:04:56.000Z">2025-09-15</time></p><p class="title"><a href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-13T10:20:55.000Z">2025-09-13</time></p><p class="title"><a href="/2025/09/13/Gin%E8%B7%AF%E7%94%B1-%E5%86%92%E5%8F%B7-%E4%B8%8E%E6%98%9F%E5%8F%B7/">Gin路由:冒号(:)与星号(*)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-11T09:22:28.000Z">2025-09-11</time></p><p class="title"><a href="/2025/09/11/%E4%BB%8E%E2%80%9C%E6%B4%8B%E8%91%B1%E2%80%9D%E5%88%B0%E2%80%9C%E5%87%BD%E6%95%B0%E9%93%BE%E2%80%9D%EF%BC%9A%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0/">从“洋葱”到“函数链”：彻底搞懂Gin中间件的核心实现</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-11T01:55:27.000Z">2025-09-11</time></p><p class="title"><a href="/2025/09/11/mysql%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%A2%B3%E7%90%86/">mysql并发问题和隔离级别的梳理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-10T07:34:54.000Z">2025-09-10</time></p><p class="title"><a href="/2025/09/10/%E5%85%B3%E4%BA%8E%E5%9B%9E%E6%9C%94%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8/">关于回朔数据的存储</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gin/"><span class="tag">gin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">5</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+<h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>你每天都在使用<code>fmt.Println()</code>，但你知道每次调用它时，Go都在幕后为你做了什么吗？你是否遇到过一个非<code>nil</code>的<code>error</code>变量，其内部却是一个<code>nil</code>指针的“陷阱”？这些问题的答案都指向同一个核心概念：<strong>装箱（Boxing）</strong>。本文将带你深入理解Go语言中这个重要但常常被忽略的隐式转换机制。</p></div><a class="article-more button is-small is-size-7" href="/2025/09/04/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E2%80%9C%E8%A3%85%E7%AE%B1%E2%80%9D%E2%80%94%E2%80%94%E4%BD%A0%E7%9C%8B%E4%B8%8D%E5%88%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/#more">Read more</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/page/0/">Previous</a></div><div class="pagination-next"><a href="/page/2/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">19</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">5</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:54.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">linux常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:38.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/mysql%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">mysql常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-15T09:04:56.000Z">2025-09-15</time></p><p class="title"><a href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-13T10:20:55.000Z">2025-09-13</time></p><p class="title"><a href="/2025/09/13/Gin%E8%B7%AF%E7%94%B1-%E5%86%92%E5%8F%B7-%E4%B8%8E%E6%98%9F%E5%8F%B7/">Gin路由:冒号(:)与星号(*)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-11T09:22:28.000Z">2025-09-11</time></p><p class="title"><a href="/2025/09/11/%E4%BB%8E%E2%80%9C%E6%B4%8B%E8%91%B1%E2%80%9D%E5%88%B0%E2%80%9C%E5%87%BD%E6%95%B0%E9%93%BE%E2%80%9D%EF%BC%9A%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0/">从“洋葱”到“函数链”：彻底搞懂Gin中间件的核心实现</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gin/"><span class="tag">gin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">5</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,

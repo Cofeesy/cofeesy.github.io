@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>linux常用命令速查表 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Linux常用命令清单一、文件与目录操作 (File &amp;amp; Directory Management)日常使用中最频繁的一类命令    命令 功能描述 常用示例    ls 列出目录内容 (list)。 ls (列出当前目录), ls -l (长格式), ls -a (显示隐藏文件)   cd 切换目录 (change directory)。 cd &amp;#x2F;home&amp;#x2F;user, cd .. ("><meta property="og:type" content="blog"><meta property="og:title" content="linux常用命令速查表"><meta property="og:url" content="https://cofeesy.github.io/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="Linux常用命令清单一、文件与目录操作 (File &amp;amp; Directory Management)日常使用中最频繁的一类命令    命令 功能描述 常用示例    ls 列出目录内容 (list)。 ls (列出当前目录), ls -l (长格式), ls -a (显示隐藏文件)   cd 切换目录 (change directory)。 cd &amp;#x2F;home&amp;#x2F;user, cd .. ("><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-09-27T09:31:54.000Z"><meta property="article:modified_time" content="2025-09-27T09:41:31.302Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="Linux"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/"},"headline":"linux常用命令速查表","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-09-27T09:31:54.000Z","dateModified":"2025-09-27T09:41:31.302Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"Linux常用命令清单一、文件与目录操作 (File &amp; Directory Management)日常使用中最频繁的一类命令    命令 功能描述 常用示例    ls 列出目录内容 (list)。 ls (列出当前目录), ls -l (长格式), ls -a (显示隐藏文件)   cd 切换目录 (change directory)。 cd &#x2F;home&#x2F;user, cd .. ("}</script><link rel="canonical" href="https://cofeesy.github.io/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-27T09:31:54.000Z" title="9/27/2025, 5:31:54 PM">2025-09-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-09-27T09:41:31.302Z" title="9/27/2025, 5:41:31 PM">2025-09-27</time></span><span class="level-item">7 minutes read (About 1022 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">linux常用命令速查表</h1><div class="content"><span id="more"></span>
+
+<h3 id="Linux常用命令清单"><a href="#Linux常用命令清单" class="headerlink" title="Linux常用命令清单"></a><strong>Linux常用命令清单</strong></h3><h4 id="一、文件与目录操作-File-Directory-Management"><a href="#一、文件与目录操作-File-Directory-Management" class="headerlink" title="一、文件与目录操作 (File &amp; Directory Management)"></a><strong>一、文件与目录操作 (File &amp; Directory Management)</strong></h4><p>日常使用中最频繁的一类命令</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>ls</code></td>
+<td align="left">列出目录内容 (list)。</td>
+<td align="left"><code>ls</code> (列出当前目录), <code>ls -l</code> (长格式), <code>ls -a</code> (显示隐藏文件)</td>
+</tr>
+<tr>
+<td align="left"><code>cd</code></td>
+<td align="left">切换目录 (change directory)。</td>
+<td align="left"><code>cd /home/user</code>, <code>cd ..</code> (返回上一级), <code>cd ~</code> (返回家目录)</td>
+</tr>
+<tr>
+<td align="left"><code>pwd</code></td>
+<td align="left">显示当前工作目录的路径 (print working directory)。</td>
+<td align="left"><code>pwd</code></td>
+</tr>
+<tr>
+<td align="left"><code>mkdir</code></td>
+<td align="left">创建新目录 (make directory)。</td>
+<td align="left"><code>mkdir my_project</code>, <code>mkdir -p a/b/c</code> (递归创建)</td>
+</tr>
+<tr>
+<td align="left"><code>rmdir</code></td>
+<td align="left">删除空目录 (remove directory)。</td>
+<td align="left"><code>rmdir empty_folder</code></td>
+</tr>
+<tr>
+<td align="left"><code>touch</code></td>
+<td align="left">创建空文件或更新文件时间戳。</td>
+<td align="left"><code>touch new_file.txt</code></td>
+</tr>
+<tr>
+<td align="left"><code>cp</code></td>
+<td align="left">复制文件或目录 (copy)。</td>
+<td align="left"><code>cp source.txt dest.txt</code>, <code>cp -r source_dir/ dest_dir/</code></td>
+</tr>
+<tr>
+<td align="left"><code>mv</code></td>
+<td align="left">移动或重命名文件&#x2F;目录 (move)。</td>
+<td align="left"><code>mv old.txt new.txt</code> (重命名), <code>mv file.txt /tmp/</code> (移动)</td>
+</tr>
+<tr>
+<td align="left"><code>rm</code></td>
+<td align="left">删除文件或目录 (remove)。</td>
+<td align="left"><code>rm file.txt</code>, <code>rm -r directory/</code> (递归删除), <code>rm -rf dir/</code> (**慎用！**强制删除)</td>
+</tr>
+<tr>
+<td align="left"><code>find</code></td>
+<td align="left">在文件系统中查找文件。</td>
+<td align="left"><code>find . -name &quot;*.py&quot;</code> (查找当前目录下的py文件)</td>
+</tr>
+</tbody></table>
+<h4 id="二、文本文件查看与处理-Viewing-Processing-Text-Files"><a href="#二、文本文件查看与处理-Viewing-Processing-Text-Files" class="headerlink" title="二、文本文件查看与处理 (Viewing &amp; Processing Text Files)"></a><strong>二、文本文件查看与处理 (Viewing &amp; Processing Text Files)</strong></h4><p>在Linux中，一切皆文件。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>cat</code></td>
+<td align="left">查看整个文件内容 (concatenate)。</td>
+<td align="left"><code>cat file.txt</code></td>
+</tr>
+<tr>
+<td align="left"><code>less</code></td>
+<td align="left">分页查看文件内容，功能比<code>more</code>强大。</td>
+<td align="left"><code>less large_file.log</code> (可用方向键滚动, <code>q</code>退出)</td>
+</tr>
+<tr>
+<td align="left"><code>head</code></td>
+<td align="left">查看文件的前几行。</td>
+<td align="left"><code>head -n 20 file.txt</code> (查看前20行)</td>
+</tr>
+<tr>
+<td align="left"><code>tail</code></td>
+<td align="left">查看文件的后几行。</td>
+<td align="left"><code>tail -n 20 file.txt</code> (查看后20行), <code>tail -f app.log</code> (实时监控)</td>
+</tr>
+<tr>
+<td align="left"><code>grep</code></td>
+<td align="left">在文本中搜索匹配的行 (global regular expression print)。</td>
+<td align="left"><code>grep &quot;error&quot; log.txt</code>, <code>cat file.txt | grep &quot;keyword&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>wc</code></td>
+<td align="left">统计文件的行数、单词数、字符数 (word count)。</td>
+<td align="left"><code>wc -l file.txt</code> (只统计行数)</td>
+</tr>
+<tr>
+<td align="left"><code>diff</code></td>
+<td align="left">比较两个文件的差异。</td>
+<td align="left"><code>diff file1.txt file2.txt</code></td>
+</tr>
+</tbody></table>
+<h4 id="三、系统信息与监控-System-Information-Monitoring"><a href="#三、系统信息与监控-System-Information-Monitoring" class="headerlink" title="三、系统信息与监控 (System Information &amp; Monitoring)"></a><strong>三、系统信息与监控 (System Information &amp; Monitoring)</strong></h4><p>故障排查和性能优化须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>top</code> &#x2F; <code>htop</code></td>
+<td align="left">实时显示系统进程和资源占用情况。</td>
+<td align="left"><code>top</code> (<code>htop</code>是<code>top</code>的彩色增强版，需安装)</td>
+</tr>
+<tr>
+<td align="left"><code>ps</code></td>
+<td align="left">显示当前进程的快照 (process status)。</td>
+<td align="left"><code>ps aux</code> (显示所有进程), <code>ps -ef | grep &quot;nginx&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>kill</code></td>
+<td align="left">终止进程。</td>
+<td align="left"><code>kill 12345</code> (终止PID为12345的进程), <code>kill -9 12345</code> (强制终止)</td>
+</tr>
+<tr>
+<td align="left"><code>df</code></td>
+<td align="left">查看磁盘空间使用情况 (disk free)。</td>
+<td align="left"><code>df -h</code> (以人类可读格式显示)</td>
+</tr>
+<tr>
+<td align="left"><code>du</code></td>
+<td align="left">查看文件或目录的磁盘占用大小 (disk usage)。</td>
+<td align="left"><code>du -sh /path/to/dir</code> (查看目录总大小)</td>
+</tr>
+<tr>
+<td align="left"><code>free</code></td>
+<td align="left">查看内存使用情况。</td>
+<td align="left"><code>free -h</code></td>
+</tr>
+<tr>
+<td align="left"><code>uname</code></td>
+<td align="left">显示系统内核信息。</td>
+<td align="left"><code>uname -a</code> (显示所有信息)</td>
+</tr>
+<tr>
+<td align="left"><code>ifconfig</code> &#x2F; <code>ip a</code></td>
+<td align="left">查看和配置网络接口。</td>
+<td align="left"><code>ip a</code> (新系统推荐)</td>
+</tr>
+<tr>
+<td align="left"><code>ping</code></td>
+<td align="left">测试网络连通性。</td>
+<td align="left"><code>ping google.com</code></td>
+</tr>
+</tbody></table>
+<h4 id="四、用户与权限管理-User-Permission-Management"><a href="#四、用户与权限管理-User-Permission-Management" class="headerlink" title="四、用户与权限管理 (User &amp; Permission Management)"></a><strong>四、用户与权限管理 (User &amp; Permission Management)</strong></h4><p>多用户系统的权限管理须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>sudo</code></td>
+<td align="left">以超级用户（root）权限执行命令。</td>
+<td align="left"><code>sudo apt-get update</code></td>
+</tr>
+<tr>
+<td align="left"><code>su</code></td>
+<td align="left">切换用户。</td>
+<td align="left"><code>su - username</code></td>
+</tr>
+<tr>
+<td align="left"><code>chmod</code></td>
+<td align="left">修改文件或目录的权限 (change mode)。</td>
+<td align="left"><code>chmod +x script.sh</code> (增加执行权限), <code>chmod 755 file</code></td>
+</tr>
+<tr>
+<td align="left"><code>chown</code></td>
+<td align="left">修改文件或目录的所有者 (change owner)。</td>
+<td align="left"><code>sudo chown user:group file</code></td>
+</tr>
+<tr>
+<td align="left"><code>whoami</code></td>
+<td align="left">显示当前登录的用户名。</td>
+<td align="left"><code>whoami</code></td>
+</tr>
+<tr>
+<td align="left"><code>passwd</code></td>
+<td align="left">修改用户密码。</td>
+<td align="left"><code>passwd</code></td>
+</tr>
+</tbody></table>
+<h4 id="五、软件安装与管理-Software-Installation-Management"><a href="#五、软件安装与管理-Software-Installation-Management" class="headerlink" title="五、软件安装与管理 (Software Installation &amp; Management)"></a><strong>五、软件安装与管理 (Software Installation &amp; Management)</strong></h4><p>不同的Linux发行版使用不同的包管理器。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令 (Debian&#x2F;Ubuntu)</th>
+<th align="left">命令 (CentOS&#x2F;RHEL&#x2F;Fedora)</th>
+<th align="left">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>apt-get update</code></td>
+<td align="left"><code>yum check-update</code></td>
+<td align="left">更新软件包列表</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get upgrade</code></td>
+<td align="left"><code>yum upgrade</code></td>
+<td align="left">升级所有已安装的包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get install &lt;pkg&gt;</code></td>
+<td align="left"><code>yum install &lt;pkg&gt;</code></td>
+<td align="left">安装一个新软件包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-get remove &lt;pkg&gt;</code></td>
+<td align="left"><code>yum remove &lt;pkg&gt;</code></td>
+<td align="left">卸载一个软件包</td>
+</tr>
+<tr>
+<td align="left"><code>apt-cache search &lt;kw&gt;</code></td>
+<td align="left"><code>yum search &lt;kw&gt;</code></td>
+<td align="left">搜索软件包</td>
+</tr>
+</tbody></table>
+<h4 id="六、压缩与解压-Archiving-Compression"><a href="#六、压缩与解压-Archiving-Compression" class="headerlink" title="六、压缩与解压 (Archiving &amp; Compression)"></a><strong>六、压缩与解压 (Archiving &amp; Compression)</strong></h4><p>传输和备份文件须知。</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">功能描述</th>
+<th align="left">常用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>tar</code></td>
+<td align="left">打包和解包文件 (tape archive)。</td>
+<td align="left"><code>tar -czvf archive.tar.gz dir/</code> (打包压缩), <code>tar -xzvf archive.tar.gz</code> (解压)</td>
+</tr>
+<tr>
+<td align="left"><code>zip</code> &#x2F; <code>unzip</code></td>
+<td align="left">创建和解压.zip文件。</td>
+<td align="left"><code>zip -r archive.zip dir/</code>, <code>unzip archive.zip</code></td>
+</tr>
+<tr>
+<td align="left"><code>gzip</code> &#x2F; <code>gunzip</code></td>
+<td align="left">压缩和解压.gz文件。</td>
+<td align="left"><code>gzip file.txt</code> (生成file.txt.gz), <code>gunzip file.txt.gz</code></td>
+</tr>
+</tbody></table>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>linux常用命令速查表</p><p><a href="https://cofeesy.github.io/2025/09/27/linux常用命令速查表/">https://cofeesy.github.io/2025/09/27/linux常用命令速查表/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-09-27</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-09-27</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Linux/">Linux</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/09/27/mysql%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/"><span class="level-item">mysql常用命令速查表</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "81dd23b91a6003e6a475abba91c9e2a2",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">19</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">5</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:54.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">linux常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:38.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/mysql%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">mysql常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-15T09:04:56.000Z">2025-09-15</time></p><p class="title"><a href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-13T10:20:55.000Z">2025-09-13</time></p><p class="title"><a href="/2025/09/13/Gin%E8%B7%AF%E7%94%B1-%E5%86%92%E5%8F%B7-%E4%B8%8E%E6%98%9F%E5%8F%B7/">Gin路由:冒号(:)与星号(*)</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-11T09:22:28.000Z">2025-09-11</time></p><p class="title"><a href="/2025/09/11/%E4%BB%8E%E2%80%9C%E6%B4%8B%E8%91%B1%E2%80%9D%E5%88%B0%E2%80%9C%E5%87%BD%E6%95%B0%E9%93%BE%E2%80%9D%EF%BC%9A%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Gin%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9E%E7%8E%B0/">从“洋葱”到“函数链”：彻底搞懂Gin中间件的核心实现</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gin/"><span class="tag">gin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">5</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
