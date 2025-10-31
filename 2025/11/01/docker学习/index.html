@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>docker学习 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"><meta property="og:type" content="blog"><meta property="og:title" content="docker学习"><meta property="og:url" content="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-10-31T17:34:59.000Z"><meta property="article:modified_time" content="2025-10-31T17:43:32.469Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="docker"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"},"headline":"docker学习","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-10-31T17:34:59.000Z","dateModified":"2025-10-31T17:43:32.469Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-10-31T17:34:59.000Z" title="2025/11/1 01:34:59">2025-11-01</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-10-31T17:43:32.469Z" title="2025/11/1 01:43:32">2025-11-01</time></span><span class="level-item">7 minutes read (About 1092 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">docker学习</h1><div class="content"><blockquote>
+<p><strong>摘要</strong>：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="1-Docker相关概念"><a href="#1-Docker相关概念" class="headerlink" title="1. Docker相关概念"></a>1. Docker相关概念</h3><h4 id="1-1-是什么？"><a href="#1-1-是什么？" class="headerlink" title="1.1 是什么？"></a>1.1 是什么？</h4><p>–是一个容器化平台，它可以把应用程序及其依赖的运行环境（包括系统库、配置、工具等）打包成一个可移植的容器（Container），从而保证在任何地方都能以相同的方式运行。</p>
+<h4 id="1-2-Dockerfile"><a href="#1-2-Dockerfile" class="headerlink" title="1.2 Dockerfile"></a>1.2 Dockerfile</h4><p>–定义镜像如何构建的脚本</p>
+<h4 id="1-3-Dockerhub"><a href="#1-3-Dockerhub" class="headerlink" title="1.3 Dockerhub"></a>1.3 Dockerhub</h4><p>–官方镜像仓库（类似 GitHub）</p>
+<h4 id="1-4-Image"><a href="#1-4-Image" class="headerlink" title="1.4 Image"></a>1.4 Image</h4><p>–打包好的“程序 + 环境”模板</p>
+<h4 id="1-5-学习来源"><a href="#1-5-学习来源" class="headerlink" title="1.5 学习来源"></a>1.5 学习来源</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63549044/article/details/133843102">博客地址</a></p>
+<h4 id="1-6-总结"><a href="#1-6-总结" class="headerlink" title="1.6 总结"></a>1.6 总结</h4><p>–总之是，先写dockerfile在dockerbuild，产生镜像，然后dockerrun镜像，生成container（Dockerfile → docker build → docker run → Container 启动成功）</p>
+<h3 id="2-常用命令总结"><a href="#2-常用命令总结" class="headerlink" title="2. 常用命令总结"></a>2. 常用命令总结</h3><p>以下是 Docker 操作中非常常用的一些命令，主要分为镜像、容器、查看和清理几大类。</p>
+<h4 id="2-1-镜像相关命令-Image"><a href="#2-1-镜像相关命令-Image" class="headerlink" title="2.1 镜像相关命令 (Image)"></a>2.1 镜像相关命令 (Image)</h4><ul>
+<li><p><strong>搜索镜像 <code>docker search</code></strong></p>
+<ul>
+<li>从 Docker Hub 上搜索镜像。</li>
+<li><code>docker search nginx</code></li>
+</ul>
+</li>
+<li><p><strong>拉取镜像 <code>docker pull</code></strong></p>
+<ul>
+<li>从镜像仓库（默认为 Docker Hub）拉取镜像到本地。</li>
+<li><code>docker pull ubuntu:20.04</code> (拉取指定版本的 ubuntu)</li>
+<li><code>docker pull redis</code> (不指定版本，默认拉取 <code>latest</code> 最新版)</li>
+</ul>
+</li>
+<li><p><strong>查看本地镜像 <code>docker images</code> 或 <code>docker image ls</code></strong></p>
+<ul>
+<li>列出本地已经存在的所有镜像。</li>
+<li><code>docker images</code></li>
+</ul>
+</li>
+<li><p><strong>构建镜像 <code>docker build</code></strong></p>
+<ul>
+<li>根据 Dockerfile 文件构建一个新的镜像。</li>
+<li><code>docker build -t my-app:1.0 .</code><ul>
+<li><code>-t</code>: (tag) 给镜像打上标签，格式为 <code>name:tag</code>。</li>
+<li><code>.</code>: 表示 Dockerfile 文件在当前目录下。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>删除本地镜像 <code>docker rmi</code> 或 <code>docker image rm</code></strong></p>
+<ul>
+<li>删除一个或多个本地镜像。</li>
+<li><code>docker rmi [IMAGE_ID or REPOSITORY:TAG]</code></li>
+<li><code>docker rmi my-app:1.0</code></li>
+<li><strong>注意</strong>：如果该镜像被某个容器正在使用，需要先删除容器才能删除镜像。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-容器相关命令-Container"><a href="#2-2-容器相关命令-Container" class="headerlink" title="2.2 容器相关命令 (Container)"></a>2.2 容器相关命令 (Container)</h4><ul>
+<li><p><strong>运行容器 <code>docker run</code></strong></p>
+<ul>
+<li>这是最核心的命令，基于一个镜像创建并启动一个容器。</li>
+<li><code>docker run -it ubuntu:20.04 /bin/bash</code> (交互式地进入 ubuntu 容器的 shell)</li>
+<li><code>docker run -d -p 8080:80 --name my-web nginx</code> (后台运行一个 nginx 容器)<ul>
+<li><code>-d</code>: (detach) 后台运行容器。</li>
+<li><code>-p</code>: (publish) 端口映射，格式为 <code>主机端口:容器端口</code>。</li>
+<li><code>--name</code>: 给容器指定一个名字，方便后续操作。</li>
+<li><code>-it</code>: (interactive &amp; tty) 交互模式，通常一起使用来进入容器命令行。</li>
+<li><code>-v</code>: (volume) 挂载数据卷，实现宿主机和容器之间的数据同步，格式为 <code>宿主机目录:容器内目录</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>查看运行中的容器 <code>docker ps</code></strong></p>
+<ul>
+<li>列出当前正在运行的容器。</li>
+<li><code>docker ps -a</code>: 列出所有容器，包括已经停止的。</li>
+</ul>
+</li>
+<li><p><strong>停止容器 <code>docker stop</code></strong></p>
+<ul>
+<li>停止一个正在运行的容器。</li>
+<li><code>docker stop [CONTAINER_ID or NAME]</code></li>
+<li><code>docker stop my-web</code></li>
+</ul>
+</li>
+<li><p><strong>启动容器 <code>docker start</code></strong></p>
+<ul>
+<li>启动一个已经停止的容器。</li>
+<li><code>docker start [CONTAINER_ID or NAME]</code></li>
+</ul>
+</li>
+<li><p><strong>重启容器 <code>docker restart</code></strong></p>
+<ul>
+<li>重启一个容器（无论其当前是运行还是停止状态）。</li>
+<li><code>docker restart [CONTAINER_ID or NAME]</code></li>
+</ul>
+</li>
+<li><p><strong>删除容器 <code>docker rm</code></strong></p>
+<ul>
+<li>删除一个或多个已经停止的容器。</li>
+<li><code>docker rm [CONTAINER_ID or NAME]</code></li>
+<li><code>docker rm -f [CONTAINER_ID or NAME]</code>: <code>-f</code> (force) 强制删除正在运行的容器。</li>
+</ul>
+</li>
+<li><p><strong>进入正在运行的容器 <code>docker exec</code></strong></p>
+<ul>
+<li>在正在运行的容器中执行命令，最常用于进入容器内部进行调试。</li>
+<li><code>docker exec -it [CONTAINER_ID or NAME] /bin/bash</code> (进入容器的 shell 环境)</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-3-查看信息与日志"><a href="#2-3-查看信息与日志" class="headerlink" title="2.3 查看信息与日志"></a>2.3 查看信息与日志</h4><ul>
+<li><p><strong>查看容器日志 <code>docker logs</code></strong></p>
+<ul>
+<li>获取容器的标准输出日志。</li>
+<li><code>docker logs [CONTAINER_ID or NAME]</code></li>
+<li><code>docker logs -f [CONTAINER_ID or NAME]</code>: <code>-f</code> (follow) 持续跟踪日志输出，类似 <code>tail -f</code>。</li>
+</ul>
+</li>
+<li><p><strong>查看容器&#x2F;镜像详细信息 <code>docker inspect</code></strong></p>
+<ul>
+<li>获取容器或镜像的底层详细信息，以 JSON 格式返回。</li>
+<li><code>docker inspect [CONTAINER_ID or IMAGE_ID]</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-清理命令"><a href="#2-4-清理命令" class="headerlink" title="2.4 清理命令"></a>2.4 清理命令</h4><ul>
+<li><strong>一键清理 <code>docker system prune</code></strong><ul>
+<li>一个非常方便的命令，可以一次性清理掉无用的 Docker 资源。</li>
+<li><code>docker system prune</code>: 会删除所有已停止的容器、所有悬空镜像（dangling images）、所有未被使用的网络。</li>
+<li><code>docker system prune -a</code>: 会更彻底地删除所有未被任何容器使用的镜像。使用时请小心！</li>
+</ul>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>docker学习</p><p><a href="https://cofeesy.github.io/2025/11/01/docker学习/">https://cofeesy.github.io/2025/11/01/docker学习/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-11-01</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-11-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/docker/">docker</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/10/23/go%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/"><span class="level-item">go并发知识归纳总结</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "52491be6ccfc9900d361d9558c9abd11",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">21</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">6</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-10-31T17:34:59.000Z">2025-11-01</time></p><p class="title"><a href="/2025/11/01/docker%E5%AD%A6%E4%B9%A0/">docker学习</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-10-23T06:46:39.000Z">2025-10-23</time></p><p class="title"><a href="/2025/10/23/go%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">go并发知识归纳总结</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:54.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">linux常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:38.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/mysql%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">mysql常用命令速查表</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-15T09:04:56.000Z">2025-09-15</time></p><p class="title"><a href="/2025/09/15/Vscode-Cursor%E5%86%99go%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93-mac/">Vscode/Cursor写go快捷键总结(mac)</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker/"><span class="tag">docker</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gin/"><span class="tag">gin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">5</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
