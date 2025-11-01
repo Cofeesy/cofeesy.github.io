@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>docker学习 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"><meta property="og:type" content="blog"><meta property="og:title" content="docker学习"><meta property="og:url" content="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-10-31T17:34:59.000Z"><meta property="article:modified_time" content="2025-11-01T05:21:57.554Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="docker"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"},"headline":"docker学习","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-10-31T17:34:59.000Z","dateModified":"2025-11-01T05:21:57.554Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"摘要：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>docker学习 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="摘要：简要记录docker相关概念学习、常用命令总结（部分命令总结由gemini2.5pro生成）以及易错总结"><meta property="og:type" content="blog"><meta property="og:title" content="docker学习"><meta property="og:url" content="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="摘要：简要记录docker相关概念学习、常用命令总结（部分命令总结由gemini2.5pro生成）以及易错总结"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-10-31T17:34:59.000Z"><meta property="article:modified_time" content="2025-11-01T06:56:43.275Z"><meta property="article:author" content="Cofeesy"><meta property="article:tag" content="docker"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"},"headline":"docker学习","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-10-31T17:34:59.000Z","dateModified":"2025-11-01T06:56:43.275Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"摘要：简要记录docker相关概念学习、常用命令总结（部分命令总结由gemini2.5pro生成）以及易错总结"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/11/01/docker%E5%AD%A6%E4%B9%A0/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
   (function () {
       function switchTab() {
           if (!location.hash) {
@@ -29,19 +29,20 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-10-31T17:34:59.000Z" title="11/1/2025, 1:34:59 AM">2025-11-01</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-11-01T05:21:57.554Z" title="11/1/2025, 1:21:57 PM">2025-11-01</time></span><span class="level-item">8 minutes read (About 1225 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">docker学习</h1><div class="content"><blockquote>
-<p><strong>摘要</strong>：简要记录docker相关概念学习以及常用命令总结（命令总结由gemini2.5pro生成）</p>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-10-31T17:34:59.000Z" title="11/1/2025, 1:34:59 AM">2025-11-01</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-11-01T06:56:43.275Z" title="11/1/2025, 2:56:43 PM">2025-11-01</time></span><span class="level-item">12 minutes read (About 1800 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">docker学习</h1><div class="content"><blockquote>
+<p><strong>摘要</strong>：简要记录docker相关概念学习、常用命令总结（部分命令总结由gemini2.5pro生成）以及易错总结</p>
 </blockquote>
 <span id="more"></span>
-<h3 id="1-Docker相关概念"><a href="#1-Docker相关概念" class="headerlink" title="1. Docker相关概念"></a>1. Docker相关概念</h3><h4 id="1-1-是什么？"><a href="#1-1-是什么？" class="headerlink" title="1.1 是什么？"></a>1.1 是什么？</h4><p>–是一个容器化平台，它可以把应用程序及其依赖的运行环境（包括系统库、配置、工具等）打包成一个可移植的容器（Container），从而保证在任何地方都能以相同的方式运行。</p>
+<h3 id="1-Docker相关概念"><a href="#1-Docker相关概念" class="headerlink" title="1. Docker相关概念"></a>1. Docker相关概念</h3><hr>
+<h4 id="1-1-是什么？"><a href="#1-1-是什么？" class="headerlink" title="1.1 是什么？"></a>1.1 是什么？</h4><p>–是一个容器化平台，它可以把应用程序及其依赖的运行环境（包括系统库、配置、工具等）打包成一个可移植的容器（Container），从而保证在任何地方都能以相同的方式运行。</p>
 <h4 id="1-2-Dockerfile"><a href="#1-2-Dockerfile" class="headerlink" title="1.2 Dockerfile"></a>1.2 Dockerfile</h4><p>–定义镜像如何构建的脚本</p>
 <h4 id="1-3-Dockerhub"><a href="#1-3-Dockerhub" class="headerlink" title="1.3 Dockerhub"></a>1.3 Dockerhub</h4><p>–官方镜像仓库（类似 GitHub）</p>
 <h4 id="1-4-Image"><a href="#1-4-Image" class="headerlink" title="1.4 Image"></a>1.4 Image</h4><p>–打包好的“程序 + 环境”模板</p>
 <h4 id="1-5-Docker-Daemon-守护进程"><a href="#1-5-Docker-Daemon-守护进程" class="headerlink" title="1.5 Docker Daemon (守护进程)"></a>1.5 Docker Daemon (守护进程)</h4><p>–Docker 的核心后台服务（因为docker工作是采用CS架构，docker daemon即server端，并且client端和server端是可以运行在同一台机器上的），负责管理镜像、容器、网络和数据卷，在客户端输入的 docker命令将转发给docker daemon执行。</p>
 <h4 id="1-6-学习来源"><a href="#1-6-学习来源" class="headerlink" title="1.6 学习来源"></a>1.6 学习来源</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63549044/article/details/133843102">博客地址</a></p>
 <h4 id="1-7-总结"><a href="#1-7-总结" class="headerlink" title="1.7 总结"></a>1.7 总结</h4><p>–总之是，先写dockerfile在dockerbuild，产生镜像，然后dockerrun镜像，生成container（Dockerfile → docker build → docker run → Container 启动成功）</p>
-<h3 id="2-常用命令总结"><a href="#2-常用命令总结" class="headerlink" title="2. 常用命令总结"></a>2. 常用命令总结</h3><p>以下是 Docker 操作中非常常用的一些命令，主要分为镜像、容器、查看和清理几大类。</p>
-<h4 id="2-1启动相关"><a href="#2-1启动相关" class="headerlink" title="2.1启动相关"></a>2.1启动相关</h4><ul>
+<h3 id="2-常用命令总结"><a href="#2-常用命令总结" class="headerlink" title="2. 常用命令总结"></a>2. 常用命令总结</h3><p>以下是 Docker 操作中常用的一些命令，主要分为启动、镜像、容器、查看和清理几大类。</p>
+<h4 id="2-1启动相关"><a href="#2-1启动相关" class="headerlink" title="2.1启动相关"></a>2.1启动相关</h4><h5 id="2-1-1-Linux"><a href="#2-1-1-Linux" class="headerlink" title="2.1.1 Linux"></a>2.1.1 Linux</h5><ul>
 <li><strong>启动 Docker 服务</strong></li>
 </ul>
 <p><code>sudo systemctl start docker</code></p>
@@ -53,6 +54,7 @@
 <li><p><strong>查看 Docker 服务状态</strong><br><code>sudo systemctl status docker</code></p>
 </li>
 </ul>
+<h5 id="2-1-1-MAC-M系列芯片-（mac不支持systemctl命令）"><a href="#2-1-1-MAC-M系列芯片-（mac不支持systemctl命令）" class="headerlink" title="2.1.1 MAC(M系列芯片)（mac不支持systemctl命令）"></a>2.1.1 MAC(M系列芯片)（mac不支持systemctl命令）</h5><p>方式<br><code>使用colima(轻量级 Linux虚拟机)(本质上是控制整个虚拟机的工具)</code><br>安装<br><code>brew install colima</code><br>启动docker<br><code>colima start</code><br>关闭docker<br><code>colima stop</code><br>查看colima状态(相当于 systemctl status docker)<br><code>colima status</code><br>更多用法及设置(以上列出的用法对于日常需求应该足够了)<br><code>https://github.com/abiosoft/colima</code></p>
 <h4 id="2-1-镜像相关命令-Image"><a href="#2-1-镜像相关命令-Image" class="headerlink" title="2.1 镜像相关命令 (Image)"></a>2.1 镜像相关命令 (Image)</h4><ul>
 <li><p><strong>搜索镜像 <code>docker search</code></strong></p>
 <ul>
@@ -92,7 +94,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="2-2-容器相关命令-Container"><a href="#2-2-容器相关命令-Container" class="headerlink" title="2.2 容器相关命令 (Container)"></a>2.2 容器相关命令 (Container)</h4><ul>
+<h4 id="2-2-容器相关命令-Container"><a href="#2-2-容器相关命令-Container" class="headerlink" title="2.2 容器相关命令 (Container)"></a>2.2 容器相关命令 (Container)</h4><hr>
+<ul>
 <li><p><strong>运行容器 <code>docker run</code></strong></p>
 <ul>
 <li>这是最核心的命令，基于一个镜像创建并启动一个容器。</li>
@@ -169,6 +172,47 @@
 </ul>
 </li>
 </ul>
+<h4 id="3-常用命令易错点总结"><a href="#3-常用命令易错点总结" class="headerlink" title="3 常用命令易错点总结"></a>3 常用命令易错点总结</h4><hr>
+<h3 id="总结表格"><a href="#总结表格" class="headerlink" title="总结表格"></a>总结表格</h3><table>
+<thead>
+<tr>
+<th align="left">易错场景</th>
+<th align="left">错误原因</th>
+<th align="left">解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">创建同名容器失败</td>
+<td align="left"><code>docker stop</code> 只停止容器，不删除，名字仍被占用。</td>
+<td align="left">先用 <code>docker rm &lt;旧容器名&gt;</code> 删除，再用 <code>docker run</code> 创建。</td>
+</tr>
+<tr>
+<td align="left">启动容器后终端被卡住</td>
+<td align="left">忘记使用 <code>-d</code> 参数，默认认情况下，容器在前台运行，并把输出附加到终端上。</td>
+<td align="left">添加 <code>-d</code> 参数，如 <code>docker run -d ...</code>使其挂后台运行。</td>
+</tr>
+<tr>
+<td align="left">无法从外部访问容器服务</td>
+<td align="left">容器默认是隔离的，它的网络和主机不互通,需要使用 <code>-p</code> 参数进行端口映射。</td>
+<td align="left">添加 <code>-p 主机端口:容器端口</code> 参数。</td>
+</tr>
+<tr>
+<td align="left">删除容器后数据丢失</td>
+<td align="left">容器的文件系统是临时的。当容器被删除时，它内部所有未挂载出去的数据都会被一同删除。</td>
+<td align="left">对于重要数据，必须使用 <code>-v 主机目录:容器目录</code> 进行挂载。</td>
+</tr>
+<tr>
+<td align="left">镜像无法删除</td>
+<td align="left">有基于该镜像的容器（即使已停止）存在。</td>
+<td align="left">先用 <code>docker ps -a</code> 找到并用 <code>docker rm</code> 删除所有相关容器。</td>
+</tr>
+<tr>
+<td align="left">构建镜像时命令报错</td>
+<td align="left"><code>docker build</code> 命令末尾忘记指定构建上下文路径。</td>
+<td align="left">在命令末尾加上路径，通常是 <code>.</code>，表示当前目录。</td>
+</tr>
+</tbody></table>
+<p>(PS:绝大多数情况下，你都不需要从零开始写 Dockerfile。你可以直接利用 Docker Hub 上数以万计的、由官方或社区打包好的现成 Image，而 docker run 命令足够智能，在你本地没有这个 Image 时，会自动帮你从网上下载&#x2F;那什么使用需要dockerfile？–当你需要打包和部署你自己的应用程序时)</p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>docker学习</p><p><a href="https://cofeesy.github.io/2025/11/01/docker学习/">https://cofeesy.github.io/2025/11/01/docker学习/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-11-01</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-11-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/docker/">docker</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/10/23/go%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/"><span class="level-item">go并发知识归纳总结</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
             id: "52491be6ccfc9900d361d9558c9abd11",
             repo: "cofeesy.github.io",
