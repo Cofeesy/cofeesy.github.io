@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>debug技巧 - Cofeesy&#039;s journey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Cofeesy&#039;s journey"><meta name="msapplication-TileImage" content="/img/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Cofeesy&#039;s journey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="摘要：简要记录debug技巧学习;IDE:vscode;工具:delve(现代Go IDE（包括VS Code和GoLand）的调试工具;语言:go;"><meta property="og:type" content="blog"><meta property="og:title" content="debug技巧"><meta property="og:url" content="https://cofeesy.github.io/2025/11/16/debug%E6%8A%80%E5%B7%A7/"><meta property="og:site_name" content="Cofeesy&#039;s journey"><meta property="og:description" content="摘要：简要记录debug技巧学习;IDE:vscode;工具:delve(现代Go IDE（包括VS Code和GoLand）的调试工具;语言:go;"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cofeesy.github.io/img/og_image.png"><meta property="article:published_time" content="2025-11-16T08:52:05.000Z"><meta property="article:modified_time" content="2025-11-16T09:06:03.549Z"><meta property="article:author" content="Cofeesy"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cofeesy.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cofeesy.github.io/2025/11/16/debug%E6%8A%80%E5%B7%A7/"},"headline":"debug技巧","image":["https://cofeesy.github.io/img/og_image.png"],"datePublished":"2025-11-16T08:52:05.000Z","dateModified":"2025-11-16T09:06:03.549Z","author":{"@type":"Person","name":"Cofeesy"},"publisher":{"@type":"Organization","name":"Cofeesy's journey","logo":{"@type":"ImageObject"}},"description":"摘要：简要记录debug技巧学习;IDE:vscode;工具:delve(现代Go IDE（包括VS Code和GoLand）的调试工具;语言:go;"}</script><link rel="canonical" href="https://cofeesy.github.io/2025/11/16/debug%E6%8A%80%E5%B7%A7/"><link rel="icon" href="/img/favicon.ico"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Cofeesy&#039;s journey</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-11-16T08:52:05.000Z" title="11/16/2025, 4:52:05 PM">2025-11-16</time></span><span class="level-item">Updated&nbsp;<time dateTime="2025-11-16T09:06:03.549Z" title="11/16/2025, 5:06:03 PM">2025-11-16</time></span><span class="level-item">10 minutes read (About 1430 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">debug技巧</h1><div class="content"><blockquote>
+<p><strong>摘要</strong>：简要记录debug技巧学习;<br>IDE:vscode;<br>工具:delve(现代Go IDE（包括VS Code和GoLand）的调试工具;<br>语言:go;</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在Go语言开发中，<code>fmt.Println</code> 是一种简单直接的调试方式，但在面对复杂应用、并发问题或深层逻辑错误时，它显得苍白无力。因此一般都需要使用调试器</p>
+<h3 id="工具及配置"><a href="#工具及配置" class="headerlink" title="工具及配置"></a>工具及配置</h3><p>所有现代Go IDE的调试功能都构建于Delve之上。Delve是一个基于机器指令的调试器，这意味着它将源代码行映射到编译后的可执行指令上。理解这一点是掌握其所有功能的关键。</p>
+<p><strong>安装Delve</strong>:<br>如果尚未安装，请通过以下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go install github.com/go-delve/delve/cmd/dlv@latest</span><br></pre></td></tr></table></figure>
+
+<p><strong>文件配置</strong>:<br>vscode需要在调试目录下生成.vscode文件夹，该文件夹下会生成launch.json文件，一般使用以下默认配置可以满足大部分debug需求</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Launch Package&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;go&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;auto&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<p>更多配置相关的信息可以访问:<code>https://go.microsoft.com/fwlink/?linkid=830387</code></p>
+<hr>
+<h3 id="一、-基础断点-Standard-Breakpoints"><a href="#一、-基础断点-Standard-Breakpoints" class="headerlink" title="一、 基础断点 (Standard Breakpoints)"></a>一、 基础断点 (Standard Breakpoints)</h3><p>基础断点是调试的起点，其核心作用是在代码执行到特定位置前暂停程序。</p>
+<h4 id="1-1-断点的设置原则"><a href="#1-1-断点的设置原则" class="headerlink" title="1.1 断点的设置原则"></a>1.1 断点的设置原则</h4><p>Delve要求断点必须设置在能够生成<strong>可执行语句 (Executable Statement)</strong> 的代码行上。否则，调试器会报告 <code>&quot;could not find statement at ...&quot;</code> 错误。</p>
+<p><strong>有效的断点位置</strong>:</p>
+<ul>
+<li>函数调用行：<code>user, err := FindUser()</code></li>
+<li>变量赋值行：<code>count = 1</code></li>
+<li>控制流语句：<code>if err != nil</code>, <code>for i := 0; ...</code></li>
+<li><code>return</code> 语句</li>
+</ul>
+<p><strong>无效的断点位置</strong>:</p>
+<ul>
+<li>注释行、空行</li>
+<li>类型定义、结构体或接口的 <code>&#123;</code> 和 <code>&#125;</code></li>
+<li>函数声明行</li>
+<li><code>else</code> 关键字所在行</li>
+</ul>
+<h4 id="1-2-变量状态检查"><a href="#1-2-变量状态检查" class="headerlink" title="1.2 变量状态检查"></a>1.2 变量状态检查</h4><p>调试器会在<strong>执行断点所在行之前</strong>暂停。因此，要观察一个变量在某行代码执行后的状态，应将断点设置在<strong>该行的下一条可执行语句上</strong>。</p>
+<p><strong>示例</strong>:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了查看 user 和 err 的赋值结果</span></span><br><span class="line">user, err := models.FindUserByID(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123; <span class="comment">// 在此行设置断点</span></span><br><span class="line">    <span class="comment">// 此时，`user` 和 `err` 变量已被赋值，可以在变量监视窗口中查看</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="二、-高级断点技巧"><a href="#二、-高级断点技巧" class="headerlink" title="二、 高级断点技巧"></a>二、 高级断点技巧</h3><h4 id="2-1-条件断点-Conditional-Breakpoints"><a href="#2-1-条件断点-Conditional-Breakpoints" class="headerlink" title="2.1 条件断点 (Conditional Breakpoints)"></a>2.1 条件断点 (Conditional Breakpoints)</h4><p><strong>应用场景</strong>：当需要在循环或频繁调用的函数中，仅在特定条件满足时才暂停程序。</p>
+<p><strong>配置方法</strong>：</p>
+<ol>
+<li>右键点击断点标记。</li>
+<li>选择“编辑断点 (Edit Breakpoint)”。</li>
+<li>在“条件 (Condition)”输入框中，输入一个返回布尔值的Go表达式。</li>
+</ol>
+<p><strong>示例</strong>：<br>在一个循环中，仅当循环变量<code>i</code>等于<code>500</code>时暂停。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">    <span class="comment">// 设置条件断点，表达式为: i == 500</span></span><br><span class="line">    processItem(i) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-日志断点-Logpoints-Tracepoints"><a href="#2-2-日志断点-Logpoints-Tracepoints" class="headerlink" title="2.2 日志断点 (Logpoints &#x2F; Tracepoints)"></a>2.2 日志断点 (Logpoints &#x2F; Tracepoints)</h4><p><strong>应用场景</strong>：在不中断程序执行流的情况下，输出变量值或自定义日志信息，以避免为了调试而修改源代码。</p>
+<p><strong>配置方法</strong>：</p>
+<ol>
+<li>右键点击代码行左侧的空白区域。</li>
+<li>选择“添加日志断点 (Add Logpoint)”。</li>
+<li>在输入框中，输入要打印的日志信息。可以使用 <code>&#123;&#125;</code> 来包裹Go表达式以进行求值。</li>
+</ol>
+<p><strong>示例</strong>：<br>跟踪HTTP请求的处理过程。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">processRequest</span><span class="params">(req *http.Request)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Logpoint: Request from &#123;req.RemoteAddr&#125;, Path: &#123;req.URL.Path&#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ... code ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Logpoint: Processing finished for user ID: &#123;user.ID&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序运行时，日志信息会直接输出到调试控制台，而程序不会暂停。</p>
+<h4 id="2-3-函数断点-Function-Breakpoints"><a href="#2-3-函数断点-Function-Breakpoints" class="headerlink" title="2.3 函数断点 (Function Breakpoints)"></a>2.3 函数断点 (Function Breakpoints)</h4><p><strong>应用场景</strong>：当需要在一个函数被调用时暂停，但可能不清楚所有调用该函数的代码位置时。</p>
+<p><strong>配置方法</strong>：</p>
+<ol>
+<li>打开调试视图的断点面板。</li>
+<li>点击“添加函数断点 (Add Function Breakpoint)”。</li>
+<li>输入完整的函数名，包括包路径（例如：<code>myproject/models.SaveUser</code>）。</li>
+</ol>
+<p><strong>效果</strong>：<br>无论项目中任何地方调用了该函数，调试器都会暂停，并提供完整的调用堆栈（Call Stack），便于追溯调用来源。</p>
+<hr>
+<h3 id="三、-调试会话中的交互技巧"><a href="#三、-调试会话中的交互技巧" class="headerlink" title="三、 调试会话中的交互技巧"></a>三、 调试会话中的交互技巧</h3><h4 id="3-1-调试控制台-Debug-Console"><a href="#3-1-调试控制台-Debug-Console" class="headerlink" title="3.1 调试控制台 (Debug Console)"></a>3.1 调试控制台 (Debug Console)</h4><p><strong>应用场景</strong>：在程序暂停时，进行动态的交互式操作，如求值、修改变量或调用函数。</p>
+<p><strong>常用操作</strong>：</p>
+<ul>
+<li><strong>求值</strong>：直接输入变量名（如 <code>user</code>）或表达式（<code>user.ID &gt; 100</code>），回车即可看到结果。</li>
+<li><strong>修改变量</strong>：输入赋值语句（如 <code>user.IsAdmin = true</code>），可以临时改变程序状态，以测试后续代码在不同条件下的行为。</li>
+<li><strong>调用函数</strong>：输入函数调用（如 <code>calculatePermissions(user)</code>），可以立即看到函数返回值，而不会影响主程序的执行流程。</li>
+</ul>
+<h4 id="3-2-观察点-Watchpoints-Data-Breakpoints"><a href="#3-2-观察点-Watchpoints-Data-Breakpoints" class="headerlink" title="3.2 观察点 (Watchpoints &#x2F; Data Breakpoints)"></a>3.2 观察点 (Watchpoints &#x2F; Data Breakpoints)</h4><p><strong>应用场景</strong>：追踪一个变量在何时、何地被意外修改。</p>
+<p><strong>配置方法</strong>：</p>
+<ol>
+<li>在程序暂停时，于调试器的变量（Variables）视图中找到目标变量。</li>
+<li>右键点击该变量，选择“在值变化时中断 (Break on Value Change)”。</li>
+</ol>
+<p><strong>效果</strong>：<br>程序继续执行后，任何代码试图修改该变量的值时，调试器会立即暂停，并将光标定位到执行修改操作的代码行。这是诊断数据污染问题的强大工具。<em>(注：此功能的支持情况可能因IDE和变量类型而异)</em></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>debug技巧</p><p><a href="https://cofeesy.github.io/2025/11/16/debug技巧/">https://cofeesy.github.io/2025/11/16/debug技巧/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Cofeesy</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-11-16</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2025-11-16</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a><a class="a2a_button_email"></a><a class="a2a_button_x"></a><a class="a2a_button_telegram"></a><a class="a2a_button_reddit"></a></div><script defer src="https://static.addtoany.com/menu/page.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/11/07/%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F/"><span class="level-item">开发模式</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "cb73730582451979d39f81c1d59ef3c4",
+            repo: "cofeesy.github.io",
+            owner: "Cofeesy",
+            clientID: "Ov23lidYxj3EEEUnP6mO",
+            clientSecret: "d7bc80c67f0b7a87eb1af23077820c0eb61e8f29",
+            admin: ["Cofeesy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 15,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.gif" alt="Cofeesy"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Cofeesy</p><p class="is-size-6 is-block">Recording Station</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, Guangdong Province</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives/"><p class="title">23</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags/"><p class="title">6</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/Cofeesy"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Twitter" href="https://x.com/Cofessy_zzz"><i class="fab fa-x-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Music" href="https://music.163.com/#/user/home?id=1482592464"><i class="fa-solid fa-music"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/Cofeesy"><i class="fab fa-telegram"></i></a></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-11-16T08:52:05.000Z">2025-11-16</time></p><p class="title"><a href="/2025/11/16/debug%E6%8A%80%E5%B7%A7/">debug技巧</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-11-06T16:59:34.000Z">2025-11-07</time></p><p class="title"><a href="/2025/11/07/%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F/">开发模式</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-10-31T17:34:59.000Z">2025-11-01</time></p><p class="title"><a href="/2025/11/01/docker%E5%AD%A6%E4%B9%A0/">docker学习</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-10-23T06:46:39.000Z">2025-10-23</time></p><p class="title"><a href="/2025/10/23/go%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%E6%80%BB%E7%BB%93/">go并发知识归纳总结</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-09-27T09:31:54.000Z">2025-09-27</time></p><p class="title"><a href="/2025/09/27/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">linux常用命令速查表</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/11/"><span class="level-start"><span class="level-item">November 2025</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/10/"><span class="level-start"><span class="level-item">October 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/09/"><span class="level-start"><span class="level-item">September 2025</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/08/"><span class="level-start"><span class="level-item">August 2025</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Goland/"><span class="tag">Goland</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/docker/"><span class="tag">docker</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gin/"><span class="tag">gin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mysql/"><span class="tag">mysql</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">5</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Cofeesy&#039;s journey</a><p class="is-size-7"><span>&copy; 2025 Cofeesy</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
